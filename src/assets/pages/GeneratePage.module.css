@@ -6,12 +6,78 @@
     margin-bottom: 60px;
 }
 
-.containerHeader {
+.containerHeader1 {
     position: absolute;
     top: -12px;
     left: 8px;
     padding: 0px 12px;
     background: #F8F8F8;
+    cursor: pointer;
+}
+
+.containerHeader1Active {
+    position: absolute;
+    top: -12px;
+    left: 8px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    font-weight: 600;
+}
+
+.containerHeader2 {
+    position: absolute;
+    top: -12px;
+    left: 216px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    cursor: pointer;
+}
+
+.containerHeader2Active {
+    position: absolute;
+    top: -12px;
+    left: 216px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    font-weight: 600;
+}
+
+.containerHeader3 {
+    position: absolute;
+    top: -12px;
+    left: 424px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    cursor: pointer;
+
+}
+
+.containerHeader3Active {
+    position: absolute;
+    top: -12px;
+    left: 424px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    font-weight: 600;
+}
+
+.containerHeader4 {
+    position: absolute;
+    top: -12px;
+    left: 632px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    cursor: pointer;
+
+}
+
+.containerHeader4Active {
+    position: absolute;
+    top: -12px;
+    left: 632px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    font-weight: 600;
 }
 
 .listWithInputContainer {

@@ -26,6 +26,7 @@ const theme = createTheme({
 // TODO
 // DUPLICATION CHECK
 const GeneratePage = () => {
+    const [tab, setTab] = React.useState("module");
 
     const [open, setOpen] = React.useState(false);
     const [activities, setActivities] = React.useState([
@@ -139,13 +140,10 @@ const GeneratePage = () => {
         ])
     }
 
-    return (
-        <div>
-            <div className={styles.container}>
-                <div className={styles.containerHeader}>
-                    Module (Class)
-                </div>
-                <div className={styles.listWithInputContainer}>
+    const tabContentHandler = () => {
+        switch (tab) {
+            case 'module':
+                return <div className={styles.listWithInputContainer}>
                     <div className={styles.inputContainer}>
                         <ThemeProvider theme={theme}>
                             <TextField
@@ -276,6 +274,98 @@ const GeneratePage = () => {
                         {/* <ListItem /> */}
                     </List>
                 </div>
+            case 'activity':
+                return <div className={styles.inputContainer}>
+                    <ThemeProvider theme={theme}>
+                        <Autocomplete
+                            required
+                            disableClearable
+
+                            id="standard-required"
+                            variant="standard"
+                            className={styles.input}
+                            options={modules}
+                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" />}
+                        />
+                    </ThemeProvider>
+                    <div>
+                    </div>
+                </div>
+            case 'lecturer':
+                return <div className={styles.inputContainer}>
+                    <ThemeProvider theme={theme}>
+                        <TextField
+                            color="gray"
+                            required
+                            id="standard-required"
+                            label="Name"
+                            variant="standard"
+                            className={styles.input}
+                        />
+                    </ThemeProvider>
+                    <div>
+
+                    </div>
+                </div>
+            case 'room':
+                return <div className={styles.inputContainer}>
+                    <ThemeProvider theme={theme}>
+                        <TextField
+                            color="gray"
+                            required
+                            id="standard-required"
+                            label="Name"
+                            variant="standard"
+                            className={styles.input}
+                        />
+                    </ThemeProvider>
+                    <div>
+
+                    </div>
+                </div>
+            default:
+                return null
+        }
+    }
+
+    const tabHandler = (tabToMove) => {
+        setTab(tabToMove)
+    }
+
+    return (
+        <div>
+            <div className={styles.container}>
+
+                <div
+                    className={tab === 'module' ? styles.containerHeader1Active : styles.containerHeader1}
+                    onClick={() => tabHandler('module')}
+                >
+                    Module (Class)
+                </div>
+
+                <div
+                    className={tab === 'activity' ? styles.containerHeader2Active : styles.containerHeader2}
+                    onClick={() => tabHandler('activity')}
+                >
+                    Activity
+                </div>
+
+                <div
+                    className={tab === 'lecturer' ? styles.containerHeader3Active : styles.containerHeader3}
+                    onClick={() => tabHandler('lecturer')}
+                >
+                    Lecturer (Staff)
+                </div>
+
+                <div
+                    className={tab === 'room' ? styles.containerHeader4Active : styles.containerHeader4}
+                    onClick={() => tabHandler('room')}
+                >
+                    Room
+                </div>
+
+                {tabContentHandler()}
+
                 <ThemeProvider theme={theme}>
                     <Button
                         className={styles.containerAddButton}
@@ -288,7 +378,7 @@ const GeneratePage = () => {
                 </ThemeProvider>
             </div>
 
-            <div className={styles.container}>
+            {/* <div className={styles.container}>
                 <div className={styles.containerHeader}>
                     Activity
                 </div>
@@ -350,7 +440,7 @@ const GeneratePage = () => {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
 
         </div>
     )
