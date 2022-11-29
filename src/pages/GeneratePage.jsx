@@ -1,7 +1,12 @@
 import * as React from 'react';
 
-import { Autocomplete, TextField, Checkbox, ThemeProvider, ListItem, ListItemText, ListItemIcon, List, Modal, Button } from "@mui/material";
+import { Autocomplete, TextField, Checkbox, ThemeProvider, ListItem, ListItemText, ListItemIcon, List, Modal, Button, FormGroup, FormControlLabel } from "@mui/material";
 import { createTheme } from '@mui/material/styles';
+
+import moment from 'moment/moment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import styles from "../assets/pages/GeneratePage.module.css";
 
@@ -27,7 +32,8 @@ const theme = createTheme({
 // DUPLICATION CHECK
 const GeneratePage = () => {
     const [tab, setTab] = React.useState("module");
-
+    const [activityModule, setActivityModule] = React.useState("");
+    const [activityActivities, setActivityActivities] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const [activities, setActivities] = React.useState([
         "Lecture",
@@ -55,6 +61,24 @@ const GeneratePage = () => {
     const [moduleID, setModuleID] = React.useState("")
     const [studentNo, setStudentNo] = React.useState(1)
     const [modules, setModules] = React.useState([])
+
+    const [startTime, setStartTime] = React.useState(moment({ hour: 9, minute: 0 }));
+    const [endTime, setEndTime] = React.useState(moment({ hour: 10, minute: 0 }));
+
+    const startTimeHandler = (newValue) => {
+        setStartTime(newValue);
+    };
+
+    const endTimeHandler = (newValue) => {
+        setEndTime(newValue);
+    };
+
+    // Set module id in activity tab
+    const activityModuleHandler = (value) => {
+        setActivityModule(value)
+        setActivityActivities(userInput.umodules[value].activities)
+    }
+
     // STATE: open handler
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -113,6 +137,7 @@ const GeneratePage = () => {
     }
 
     const addModule = () => {
+
         setUserInput(
             {
                 ...userInput,
@@ -122,6 +147,7 @@ const GeneratePage = () => {
                 }
             }
         )
+        console.log(umodule);
 
 
         setUModule(
@@ -275,22 +301,103 @@ const GeneratePage = () => {
                     </List>
                 </div>
             case 'activity':
-                return <div className={styles.inputContainer}>
-                    <ThemeProvider theme={theme}>
-                        <Autocomplete
-                            required
-                            disableClearable
+                return <div className={styles.activityInputContainer}>
+                    <div className={styles.inputContainer}>
+                        <ThemeProvider theme={theme}>
+                            <Autocomplete
+                                required
+                                disableClearable
 
-                            id="standard-required"
-                            variant="standard"
-                            className={styles.input}
-                            options={modules}
-                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" />}
-                        />
-                    </ThemeProvider>
-                    <div>
+                                id="standard-required"
+                                variant="standard"
+                                className={styles.input}
+                                options={modules}
+                                renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" />}
+                                onInputChange={(event, newInputValue) => {
+                                    activityModuleHandler(newInputValue);
+                                }}
+                            />
+                        </ThemeProvider>
+                        {/* This part has to be erased */}
+                        <div />
+                        {/*  */}
+                        <ThemeProvider theme={theme}>
+                            <Autocomplete
+                                required
+                                disableClearable
+
+                                id="standard-required"
+                                variant="standard"
+                                className={styles.input}
+                                options={activityActivities}
+                                renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Activity" />}
+                            />
+                        </ThemeProvider>
+                        <div className={styles.timePicker}>
+                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                <TimePicker
+                                    label="Start Time"
+                                    value={startTime}
+                                    onChange={startTimeHandler}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+
+                                <TimePicker
+                                    label="End Time"
+                                    value={endTime}
+                                    onChange={endTimeHandler}
+                                    renderInput={(params) => <TextField {...params} />}
+                                />
+                            </LocalizationProvider>
+                        </div>
                     </div>
-                </div>
+                    <div className={styles.dayPicker}>
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Monday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Tuesday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Wednesday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Thursday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Sunday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Friday" />
+                            <FormControlLabel control={<Checkbox sx={{
+                                color: 'black',
+                                '&.Mui-checked': {
+                                    color: 'black',
+                                },
+                            }} />} label="Saturday" />
+                        </FormGroup>
+                    </div>
+                </div >
             case 'lecturer':
                 return <div className={styles.inputContainer}>
                     <ThemeProvider theme={theme}>

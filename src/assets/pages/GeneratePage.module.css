@@ -139,3 +139,20 @@
     right: 25px;
     bottom: 15px;
 }
+
+.activityInputContainer {
+    display: flex;
+}
+
+.timePicker {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 136px;
+    justify-content: space-between;
+}
+
+.dayPicker {
+    margin-left: 24px;
+}
