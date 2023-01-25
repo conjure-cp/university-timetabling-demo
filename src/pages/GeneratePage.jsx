@@ -97,13 +97,13 @@ const GeneratePage = () => {
 
     const [prefEndTime, setPrefEndTime] = React.useState(
         {
-            monday: moment({ hour: 9, minute: 0 }),
-            tuesday: moment({ hour: 9, minute: 0 }),
-            wednesday: moment({ hour: 9, minute: 0 }),
-            thursday: moment({ hour: 9, minute: 0 }),
-            friday: moment({ hour: 9, minute: 0 }),
-            saturday: moment({ hour: 9, minute: 0 }),
-            sunday: moment({ hour: 9, minute: 0 })
+            monday: moment({ hour: 10, minute: 0 }),
+            tuesday: moment({ hour: 10, minute: 0 }),
+            wednesday: moment({ hour: 10, minute: 0 }),
+            thursday: moment({ hour: 10, minute: 0 }),
+            friday: moment({ hour: 10, minute: 0 }),
+            saturday: moment({ hour: 10, minute: 0 }),
+            sunday: moment({ hour: 10, minute: 0 })
         }
     )
 
@@ -119,26 +119,58 @@ const GeneratePage = () => {
         }
     )
 
-    const [unavailableEndtTime, setUnavailableEndTime] = React.useState(
+    const [unavailableEndTime, setUnavailableEndTime] = React.useState(
         {
-            monday: moment({ hour: 9, minute: 0 }),
-            tuesday: moment({ hour: 9, minute: 0 }),
-            wednesday: moment({ hour: 9, minute: 0 }),
-            thursday: moment({ hour: 9, minute: 0 }),
-            friday: moment({ hour: 9, minute: 0 }),
-            saturday: moment({ hour: 9, minute: 0 }),
-            sunday: moment({ hour: 9, minute: 0 })
+            monday: moment({ hour: 10, minute: 0 }),
+            tuesday: moment({ hour: 10, minute: 0 }),
+            wednesday: moment({ hour: 10, minute: 0 }),
+            thursday: moment({ hour: 10, minute: 0 }),
+            friday: moment({ hour: 10, minute: 0 }),
+            saturday: moment({ hour: 10, minute: 0 }),
+            sunday: moment({ hour: 10, minute: 0 })
         }
     )
 
     const [lecturerName, setLecturerName] = React.useState("");
-    const [lecturerModule, setLecturerModule] = React.useState("");
+    const [lecturerUnavailableModule, setLecturerUnavailableModule] = React.useState("");
+    const [lecturerPrefModule, setLecturerPrefModule] = React.useState("");
+
+
+    const [prefDays, setPrefDays] = React.useState({
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+    })
+
+    const [unavDays, setUnavDays] = React.useState({
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+        sunday: false
+    })
+
+    const [lecturerPrefModuleActivities, setLecturerPrefModuleActivities] = React.useState([])
+
     /**
      * Set prefer time (start)
      * @param {*} newValue 
      * @param {*} day 
      */
     const prefStartTimeHandler = (newValue, day) => {
+        if (newValue >= prefEndTime[day]) {
+            setPrefEndTime({
+                ...prefEndTime,
+                [day]: newValue.clone().add(1, 'h'),
+            })
+        }
+
         setPrefStartTime({
             ...prefStartTime,
             [day]: newValue
@@ -151,6 +183,13 @@ const GeneratePage = () => {
      * @param {*} day 
      */
     const prefEndTimeHandler = (newValue, day) => {
+        if (newValue <= prefStartTime[day]) {
+            setPrefStartTime({
+                ...prefStartTime,
+                [day]: newValue.clone().add(-1, 'h'),
+            })
+        }
+
         setPrefEndTime({
             ...prefEndTime,
             [day]: newValue
@@ -158,6 +197,13 @@ const GeneratePage = () => {
     }
 
     const unavailableStartTimeHandler = (newValue, day) => {
+        if (newValue >= unavailableEndTime[day]) {
+            setUnavailableEndTime({
+                ...unavailableEndTime,
+                [day]: newValue.clone().add(1, 'h'),
+            })
+        }
+
         setUnavailableStartTime({
             ...unavailableStartTime,
             [day]: newValue
@@ -165,8 +211,15 @@ const GeneratePage = () => {
     }
 
     const unavailableEndTimeHandler = (newValue, day) => {
+        if (newValue <= unavailableStartTime[day]) {
+            setUnavailableStartTime({
+                ...unavailableStartTime,
+                [day]: newValue.clone().add(-1, 'h'),
+            })
+        }
+
         setUnavailableEndTime({
-            ...unavailableEndtTime,
+            ...unavailableEndTime,
             [day]: newValue
         })
     }
@@ -209,6 +262,31 @@ const GeneratePage = () => {
         console.log(event.target.name)
         setActivityDays({
             ...activityDays,
+            [event.target.name]: event.target.checked
+        })
+
+    }
+
+    const setLecturerPrefDaysHandler = (event) => {
+        setPrefDays({
+            ...prefDays,
+            [event.target.name]: event.target.checked
+        })
+
+    }
+
+    const setLecturerUnavailableDaysHandler = (event) => {
+        // setUserInputActivity({
+        //     ...userInputActivity,
+        //     days: {
+        //         ...activityDays,
+        //         [event.target.name]: event.target.checked
+        //     }
+        // })
+
+        console.log(event.target.name)
+        setUnavDays({
+            ...unavDays,
             [event.target.name]: event.target.checked
         })
 
@@ -271,13 +349,14 @@ const GeneratePage = () => {
         })
     }
 
-    const lecturerModuleHandler = (value) => {
-        setUserInputActivity({
-            ...userInputActivity,
-            lecturerModule: value
-        })
-        setActivityModule(value)
-        setActivityActivities(userInput.umodules[value].activities)
+    const lecturerUnavailableModuleHandler = (value) => {
+        setLecturerUnavailableModule(value)
+    }
+
+    const lecturerPrefModuleHandler = (value) => {
+        setLecturerPrefModule(value)
+        console.log(userInput)
+        setLecturerPrefModuleActivities(userInput.umodules[value].activities)
     }
 
     const addModule = () => {
@@ -353,6 +432,16 @@ const GeneratePage = () => {
                 setTab('lecturer');
                 break;
             case 'lecturer':
+                console.log(lecturerName);
+                console.log(lecturerPrefModule);
+                console.log(lecturerPrefModuleActivities);
+                console.log(prefDays);
+                console.log(prefStartTime);
+                console.log(prefEndTime)
+                console.log(lecturerUnavailableModule);
+                console.log(unavDays);
+                console.log(unavailableStartTime);
+                console.log(unavailableEndTime)
                 break;
             case 'room':
                 break;
@@ -659,8 +748,9 @@ const GeneratePage = () => {
                             variant="standard"
                             className={styles.input}
                             options={modules}
-                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" />}
+                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" value={lecturerUnavailableModule} />}
                             onInputChange={(event, newInputValue) => {
+                                lecturerUnavailableModuleHandler(newInputValue);
                                 // activityModuleHandler(newInputValue);
                             }}
                         />
@@ -685,7 +775,7 @@ const GeneratePage = () => {
                                             },
                                         }}
                                             name="monday"
-                                            onChange={setActivityDaysHandler}
+                                            onChange={setLecturerUnavailableDaysHandler}
                                         />
                                         <div className={styles.lecturerTimePickerContainer}>
                                             <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -698,7 +788,7 @@ const GeneratePage = () => {
 
                                                 <TimePicker
                                                     label="End Time"
-                                                    value={unavailableEndtTime.monday}
+                                                    value={unavailableEndTime.monday}
                                                     onChange={(event) => unavailableEndTimeHandler(event, "monday")}
                                                     renderInput={(params) => <TextField {...params} />}
                                                 />
@@ -716,7 +806,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="tuesday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -729,7 +819,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.tuesday}
+                                                value={unavailableEndTime.tuesday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "tuesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -746,7 +836,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="wednesday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -759,7 +849,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.wednesday}
+                                                value={unavailableEndTime.wednesday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "wednesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -776,7 +866,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="thursday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -789,7 +879,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.thursday}
+                                                value={unavailableEndTime.thursday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "thursday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -806,7 +896,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="friday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -819,7 +909,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.friday}
+                                                value={unavailableEndTime.friday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "friday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -836,7 +926,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="saturday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -849,7 +939,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.saturday}
+                                                value={unavailableEndTime.saturday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "saturday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -866,7 +956,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="sunday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerUnavailableDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -879,7 +969,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.sunday}
+                                                value={unavailableEndTime.sunday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "sunday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -903,9 +993,9 @@ const GeneratePage = () => {
                             variant="standard"
                             className={styles.input}
                             options={modules}
-                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" />}
+                            renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Module ID" value={lecturerPrefModule} />}
                             onInputChange={(event, newInputValue) => {
-                                // activityModuleHandler(newInputValue);
+                                lecturerPrefModuleHandler(newInputValue);
                             }}
                         />
                     </ThemeProvider>
@@ -921,7 +1011,7 @@ const GeneratePage = () => {
                             id="standard-required"
                             variant="standard"
                             className={styles.input}
-                            options={activityActivities}
+                            options={lecturerPrefModuleActivities}
                             renderInput={(params) => <TextField color="gray" variant='standard'{...params} label="Activity" />}
                             onInputChange={(event, newInputValue) => {
                                 // activityActivityHandler(newInputValue);
@@ -942,7 +1032,7 @@ const GeneratePage = () => {
                                             },
                                         }}
                                             name="monday"
-                                            onChange={setActivityDaysHandler}
+                                            onChange={setLecturerPrefDaysHandler}
                                         />
                                         <div className={styles.lecturerTimePickerContainer}>
                                             <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -973,7 +1063,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="tuesday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -986,7 +1076,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={prefEndTime.monday}
+                                                value={prefEndTime.tuesday}
                                                 onChange={(event) => prefEndTimeHandler(event, "tuesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1003,7 +1093,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="wednesday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -1016,7 +1106,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={prefEndTime.monday}
+                                                value={prefEndTime.wednesday}
                                                 onChange={(event) => prefEndTimeHandler(event, "wednesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1033,7 +1123,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="thursday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -1063,7 +1153,7 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="friday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -1093,20 +1183,20 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="saturday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
                                             <TimePicker
                                                 label="Start Time"
-                                                value={prefStartTime.thursday}
+                                                value={prefStartTime.saturday}
                                                 onChange={(event) => prefStartTimeHandler(event, "saturday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={prefEndTime.thursday}
+                                                value={prefEndTime.saturday}
                                                 onChange={(event) => prefEndTimeHandler(event, "saturday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1123,20 +1213,20 @@ const GeneratePage = () => {
                                         },
                                     }}
                                         name="sunday"
-                                        onChange={setActivityDaysHandler}
+                                        onChange={setLecturerPrefDaysHandler}
                                     />
                                     <div className={styles.lecturerTimePickerContainer}>
                                         <LocalizationProvider dateAdapter={AdapterMoment}>
                                             <TimePicker
                                                 label="Start Time"
-                                                value={prefStartTime.thursday}
+                                                value={prefStartTime.sunday}
                                                 onChange={(event) => prefStartTimeHandler(event, "sunday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={prefEndTime.thursday}
+                                                value={prefEndTime.sunday}
                                                 onChange={(event) => prefEndTimeHandler(event, "sunday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1202,7 +1292,7 @@ const GeneratePage = () => {
 
                                                 <TimePicker
                                                     label="End Time"
-                                                    value={unavailableEndtTime.monday}
+                                                    value={unavailableEndTime.monday}
                                                     onChange={(event) => unavailableEndTimeHandler(event, "monday")}
                                                     renderInput={(params) => <TextField {...params} />}
                                                 />
@@ -1233,7 +1323,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.tuesday}
+                                                value={unavailableEndTime.tuesday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "tuesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1263,7 +1353,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.wednesday}
+                                                value={unavailableEndTime.wednesday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "wednesday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1293,7 +1383,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.thursday}
+                                                value={unavailableEndTime.thursday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "thursday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1323,7 +1413,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.friday}
+                                                value={unavailableEndTime.friday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "friday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1353,7 +1443,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.saturday}
+                                                value={unavailableEndTime.saturday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "saturday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
@@ -1383,7 +1473,7 @@ const GeneratePage = () => {
 
                                             <TimePicker
                                                 label="End Time"
-                                                value={unavailableEndtTime.sunday}
+                                                value={unavailableEndTime.sunday}
                                                 onChange={(event) => unavailableEndTimeHandler(event, "sunday")}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
