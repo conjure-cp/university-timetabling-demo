@@ -1828,7 +1828,8 @@ const SolutionPage = () => {
                         "solver": "cadical",
                         "model": model,
                         "data": JSON.stringify(data),
-                        "conjure_options": ["--number-of-solutions", "1"]
+                        "conjure_options": ["--number-of-solutions", "1"],
+                        appName: "university-timetabling"
                     }
                 )
             })
@@ -1858,7 +1859,8 @@ const SolutionPage = () => {
                             "solver": "cadical",
                             "model": model,
                             "data": JSON.stringify(data),
-                            "conjure_options": ["--number-of-solutions", "1"]
+                            "conjure_options": ["--number-of-solutions", "1"],
+                            appName: "university-timetabling"
                         }
                     )
                 })
@@ -1891,6 +1893,7 @@ const SolutionPage = () => {
             body: JSON.stringify(
                 {
                     "jobid": localStorage.getItem("jobID"),
+                    appName: "university-timetabling"
                 }
             )
         })
