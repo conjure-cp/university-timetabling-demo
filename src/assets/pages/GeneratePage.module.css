@@ -4,7 +4,10 @@
     padding: 20px 35px;
     position: relative;
     margin-bottom: 60px;
+
 }
+
+
 
 .containerHeader1 {
     position: absolute;
@@ -80,6 +83,25 @@
     font-weight: 600;
 }
 
+.containerHeader5 {
+    position: absolute;
+    top: -12px;
+    left: 840px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    cursor: pointer;
+
+}
+
+.containerHeader5Active {
+    position: absolute;
+    top: -12px;
+    left: 840px;
+    padding: 0px 12px;
+    background: #F8F8F8;
+    font-weight: 600;
+}
+
 .listWithInputContainer {
     display: flex;
 }
@@ -91,6 +113,10 @@
 
 .input {
     width: 200px;
+}
+
+.assignInput {
+    width: 300px;
 }
 
 .modal {
@@ -115,7 +141,6 @@
 
 .addButton {
     border-radius: 0px !important;
-    box-shadow: none !important;
     margin-left: 25px !important;
     width: 90px;
     height: 40px;
@@ -131,7 +156,6 @@
 
 .containerAddButton {
     border-radius: 0px !important;
-    box-shadow: none !important;
     margin-left: 25px !important;
     width: 90px;
     height: 40px;
@@ -140,8 +164,39 @@
     bottom: 15px;
 }
 
+
+.containerResetButton {
+    border-radius: 0px !important;
+    width: 90px;
+    height: 40px;
+    position: fixed !important;
+    left: 25px;
+    bottom: 15px;
+}
+
+.containerExportButton {
+    border-radius: 0px !important;
+    margin-left: 25px !important;
+    width: 90px;
+    height: 40px;
+    position: fixed !important;
+    right: 25px;
+    bottom: 70px;
+}
+
+.containerImportButton {
+    border-radius: 0px !important;
+    margin-left: 25px !important;
+    width: 90px;
+    height: 40px;
+    position: fixed !important;
+    right: 25px;
+    bottom: 15px;
+}
+
 .activityInputContainer {
     display: flex;
+    flex-direction: column;
 }
 
 .timePicker {
@@ -173,8 +228,200 @@
     margin-right: 15px;
 }
 
-.unavailableHeader {
+.availableHeader {
     height: 40px;
     line-height: 60px;
     border-bottom: 1px solid #64748B;
+}
+
+.inputFile {
+    display: none;
+}
+
+.formFileUpload {
+    height: 16rem;
+    width: 28rem;
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.inputFileUpload {
+    display: none;
+}
+
+.labelFileUpload {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+
+.labelFileUploaded {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #64748B;
+    background-color: #edf5ff;
+}
+
+.dragActive {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background-color: #ffffff;
+}
+
+.fileUploadIcon {
+    height: 120px !important;
+    width: 120px !important;
+}
+
+.uploadButton {
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1rem;
+    border: none;
+    background-color: transparent;
+}
+
+.uploadButton:hover {
+    text-decoration-line: underline;
+}
+
+.dragFileElement {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.timeSlot {
+    display: grid;
+    grid-template-columns: 6fr 1fr 12fr 12fr 12fr 12fr 12fr;
+    grid-template-rows: 40px 60px;
+    margin-top: 24px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 48px;
+}
+
+.helperWrapper {
+    height: 26px;
+    line-height: 26px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.helper {
+    position: absolute;
+    width: 240px;
+    height: 52px;
+    right: 0px;
+    top: -76px;
+}
+
+.helperText {
+    width: 142px;
+    margin-right: 30px;
+}
+
+.allowed {
+    width: 12px;
+    height: 12px;
+    background-color: #64748B;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+.preferred {
+    width: 12px;
+    height: 12px;
+    background-color: #152D4F;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+.borderLine {
+    border-top: 1px solid rgb(218, 220, 224);
+}
+
+.timeSlotHeader {
+    color: #64748B;
+    height: 40px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-radius: 0px !important;
+    line-height: 40px;
+}
+
+.timeSlotCellNone {
+    color: #64748B;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCell {
+    color: white !important;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellNone {
+    color: #64748B;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCell {
+    color: white !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeHeader {
+    position: relative;
+}
+
+.timeHeaderValue {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px !important;
 }

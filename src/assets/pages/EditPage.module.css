@@ -1,0 +1,300 @@
+.page {
+    padding: 0px 50px;
+}
+
+.header {
+    border-top: 1px solid;
+    position: relative;
+    min-height: 48px;
+    margin-bottom: 48px;
+}
+
+.headerActive {
+    border: 1px solid;
+
+}
+
+.headerTitle {
+    position: absolute;
+    left: 20px;
+    top: -12px;
+    background-color: #F8F8F8;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.timeslotContainer {
+    position: relative;
+}
+
+.input {
+    position: absolute !important;
+    width: 100px;
+    right: 340px;
+    z-index: 1;
+}
+
+.timeslotHeader {
+    position: absolute;
+    font-size: 30px;
+    height: 60px;
+    line-height: 60px;
+    z-index: 1;
+}
+
+.iconButton {
+    position: absolute !important;
+    right: 50px;
+    top: -20px;
+    background-color: #F8F8F8 !important;
+}
+
+.deleteButton {
+    position: absolute !important;
+    right: 10px;
+    top: -20px;
+    background-color: #F8F8F8 !important;
+}
+
+.activityTitle {
+    margin-top: 20px;
+    padding-bottom: 5px;
+}
+
+.activitiesContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.activityBox {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #64748B;
+    border: 1px solid rgb(218, 220, 224);
+    color: #F8F8F8
+}
+
+.timeslotIconButton {
+    z-index: 1;
+    position: absolute !important;
+    right: 290px;
+    background-color: #F8F8F8 !important;
+}
+
+.timeslotDeleteIconButton {
+    z-index: 1;
+    position: absolute !important;
+    right: 250px;
+    background-color: #F8F8F8 !important;
+}
+
+.shrink {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-y: hidden;
+    max-height: 12px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    transition: max-height 0.5s;
+    padding: 24px 36px;
+}
+
+.expand {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-height: 800px;
+    overflow-y: scroll;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    transition: max-height 0.5s;
+    padding: 24px 36px;
+}
+
+.shrinkActivity {
+    overflow-y: hidden;
+    max-height: 12px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    transition: max-height 0.5s;
+    padding: 24px 36px;
+}
+
+.expandActivity {
+    max-height: 800px;
+    overflow-y: scroll;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    transition: max-height 0.5s;
+    padding: 24px 36px;
+}
+
+.module {
+    border: 1px solid #e3e3e3;
+    margin: 12px 8px;
+    min-height: 130px;
+    box-shadow: rgb(0 0 0 / 3%) 2px 2px 3px;
+    position: relative;
+    padding: 24px 8px 12px 8px;
+}
+
+.moduleID {
+    position: absolute;
+    font-size: 30px;
+    font-weight: 300;
+    top: -20px;
+    left: 8px;
+    background: #F8F8F8;
+    padding: 0px 8px;
+}
+
+.assignedID {
+    position: absolute;
+    font-size: 16px;
+    font-weight: 300;
+    top: -12px;
+    left: 8px;
+    background: #F8F8F8;
+    padding: 0px 8px;
+}
+
+.assignedType {
+    position: absolute;
+    font-weight: 300;
+    font-size: 12px;
+    top: 4px;
+    left: 16px;
+}
+
+.moduleIDEditButton {
+    position: absolute !important;
+    right: 10px;
+    top: -20px;
+    background-color: #F8F8F8 !important;
+}
+
+.numberContainer {
+    display: flex;
+    position: relative;
+}
+
+.noTitle {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.no {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.editInput {
+    height: '38px !important';
+    padding: '1px 2px !important'
+}
+
+.timeSlot {
+    display: grid;
+    grid-template-columns: 6fr 1fr 12fr 12fr 12fr 12fr 12fr;
+    grid-template-rows: 40px 60px;
+    margin-top: 24px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 48px;
+}
+
+.helperWrapper {
+    height: 26px;
+    line-height: 26px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.helper {
+    position: absolute;
+    width: 240px;
+    height: 52px;
+    right: 0px;
+    top: -76px;
+}
+
+.helperText {
+    width: 142px;
+    margin-right: 30px;
+}
+
+.allowed {
+    width: 12px;
+    height: 12px;
+    background-color: #64748B;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+.preferred {
+    width: 12px;
+    height: 12px;
+    background-color: #152D4F;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+.borderLine {
+    border-top: 1px solid rgb(218, 220, 224);
+}
+
+.timeSlotHeader {
+    color: #64748B;
+    height: 40px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-radius: 0px !important;
+    line-height: 40px;
+}
+
+.timeSlotCell {
+    color: white !important;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+
+}
+
+.timeSlotLastCell {
+    color: white !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+
+
+}
+
+.timeHeader {
+    position: relative;
+}
+
+.timeHeaderValue {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px !important;
+}
+
+.saveButton {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 0px !important;
+}

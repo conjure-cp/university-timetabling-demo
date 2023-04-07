@@ -1,0 +1,474 @@
+.solutionPage {
+    margin: 0px 55px;
+}
+
+.solveButton {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 0px !important;
+}
+
+.noSolution {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.noSolutionSub {
+    font-size: 16px
+}
+
+.optionsContainer {
+    display: flex;
+    justify-content: flex-end;
+    line-height: 40px;
+    font-weight: 200;
+}
+
+.titlesContainer {
+    display: flex;
+    font-size: 38px;
+    height: 40px;
+    line-height: 38px;
+
+    margin-bottom: 15px;
+}
+
+.moduleTitle {}
+
+.subtitlesContainer {
+    padding-left: 5px;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+}
+
+.roomTitle {
+    font-size: 18px;
+    font-weight: 300;
+    height: 20px;
+    line-height: 20px;
+}
+
+.lecturerTitle {
+    font-size: 18px;
+    font-weight: 300;
+    height: 20px;
+    line-height: 20px;
+}
+
+.timeslot {
+    display: grid;
+    grid-template-columns: 6fr 1fr 12fr 12fr 12fr 12fr 12fr;
+    text-align: center;
+    position: relative;
+    margin-bottom: 48px;
+}
+
+.timeSlotHeader {
+    color: #64748B;
+    height: 40px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-radius: 0px !important;
+    line-height: 40px;
+}
+
+.borderLine {
+    border-top: 1px solid rgb(218, 220, 224);
+}
+
+.timeSlotCell {
+    color: white !important;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCellChecked {
+    color: white !important;
+    background-color: #64748B;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCell {
+    color: white !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellChecked {
+    color: white !important;
+    background-color: #64748B;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCellChecked2 {
+    color: white !important;
+    background-color: #465761;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellChecked2 {
+    color: white !important;
+    background-color: #465761;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCellChecked3 {
+    color: white !important;
+    background-color: #8B6477;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellChecked3 {
+    color: white !important;
+    background-color: #8B6477;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCellChecked4 {
+    color: white !important;
+    background-color: #614653;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellChecked4 {
+    color: white !important;
+    background-color: #614653;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotCellChecked5 {
+    color: white !important;
+    background-color: #8B8764;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeSlotLastCellChecked5 {
+    color: white !important;
+    background-color: #8B8764;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+}
+
+.timeHeader {
+    position: relative;
+}
+
+.timeHeaderValue {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px !important;
+}
+
+.activityHeader {
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    font-weight: 100;
+}
+
+.activityValue {
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.roomHeader {
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    font-weight: 100;
+}
+
+.roomValue {
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+
+
+
+.timeSlotCellCheckedCombined {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #64748B;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotCellCheckedCombined:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotLastCellCheckedCombined {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #64748B;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotLastCellCheckedCombined:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotCellCheckedCombined2 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #465761;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotCellCheckedCombined2:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotLastCellCheckedCombined2 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #465761;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotLastCellCheckedCombined2:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotCellCheckedCombined3 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #8B6477;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotCellCheckedCombined3:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotLastCellCheckedCombined3 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #8B6477;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotLastCellCheckedCombined3:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+
+.timeSlotCellCheckedCombined4 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #614653;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotCellCheckedCombined4:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+
+.timeSlotLastCellCheckedCombined4 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #614653;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotLastCellCheckedCombined4:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotCellCheckedCombined5 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #8B8764;
+    border-radius: 0px !important;
+    min-height: 60px;
+    line-height: 60px;
+    border-left: 1px solid rgb(218, 220, 224) !important;
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotCellCheckedCombined5:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.timeSlotLastCellCheckedCombined5 {
+    overflow-x: hidden;
+    color: white !important;
+    background-color: #8B8764;
+    min-height: 60px;
+    line-height: 60px;
+    border-radius: 0px !important;
+    border-right: 1px solid rgb(218, 220, 224) !important;
+
+    border-left: 1px solid rgb(218, 220, 224) !important;
+
+    border-top: 1px solid rgb(218, 220, 224) !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.timeSlotLastCellCheckedCombined5:hover {
+    width: 500%;
+    z-index: 1;
+}
+
+.multipleCell {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    position: relative;
+}
