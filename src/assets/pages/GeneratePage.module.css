@@ -1,427 +1,437 @@
 .container {
-    /* height: 300px; */
-    border: 1px solid black;
-    padding: 20px 35px;
-    position: relative;
-    margin-bottom: 60px;
-
+  /* height: 300px; */
+  border: 1px solid black;
+  padding: 20px 35px;
+  position: relative;
+  margin-bottom: 60px;
 }
 
-
-
 .containerHeader1 {
-    position: absolute;
-    top: -12px;
-    left: 8px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    cursor: pointer;
+  position: absolute;
+  top: -12px;
+  left: 8px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
 }
 
 .containerHeader1Active {
-    position: absolute;
-    top: -12px;
-    left: 8px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    font-weight: 600;
+  position: absolute;
+  top: -12px;
+  left: 8px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
 }
 
 .containerHeader2 {
-    position: absolute;
-    top: -12px;
-    left: 216px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    cursor: pointer;
+  position: absolute;
+  top: -12px;
+  left: 216px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
 }
 
 .containerHeader2Active {
-    position: absolute;
-    top: -12px;
-    left: 216px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    font-weight: 600;
+  position: absolute;
+  top: -12px;
+  left: 216px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
 }
 
 .containerHeader3 {
-    position: absolute;
-    top: -12px;
-    left: 424px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    cursor: pointer;
-
+  position: absolute;
+  top: -12px;
+  left: 366px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
 }
 
 .containerHeader3Active {
-    position: absolute;
-    top: -12px;
-    left: 424px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    font-weight: 600;
+  position: absolute;
+  top: -12px;
+  left: 366px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
 }
 
 .containerHeader4 {
-    position: absolute;
-    top: -12px;
-    left: 632px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    cursor: pointer;
-
+  position: absolute;
+  top: -12px;
+  left: 572px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
 }
 
 .containerHeader4Active {
-    position: absolute;
-    top: -12px;
-    left: 632px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    font-weight: 600;
+  position: absolute;
+  top: -12px;
+  left: 572px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
 }
 
 .containerHeader5 {
-    position: absolute;
-    top: -12px;
-    left: 840px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    cursor: pointer;
-
+  position: absolute;
+  top: -12px;
+  left: 706px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
 }
 
 .containerHeader5Active {
-    position: absolute;
-    top: -12px;
-    left: 840px;
-    padding: 0px 12px;
-    background: #F8F8F8;
-    font-weight: 600;
+  position: absolute;
+  top: -12px;
+  left: 706px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
+}
+
+.containerHeader6 {
+  position: absolute;
+  top: -12px;
+  left: 912px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+
+.containerHeader6Active {
+  position: absolute;
+  top: -12px;
+  left: 912px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  font-weight: 600;
 }
 
 .listWithInputContainer {
-    display: flex;
+  display: flex;
 }
 
 .inputContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
-    width: 200px;
+  width: 200px;
 }
 
 .assignInput {
-    width: 300px;
+  width: 300px;
 }
 
 .modal {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 280px;
-    background-color: #F8F8F8;
-    border: 1px solid;
-    display: flex;
-    flex-direction: column;
-    padding: 25px 35px;
-    justify-content: space-between;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 290px;
+  background-color: #f8f8f8;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 35px;
+  justify-content: space-between;
 }
 
 .buttonContainer {
-    display: flex;
-    align-self: flex-end;
+  display: flex;
+  align-self: flex-end;
+  margin-top: 10px;
 }
 
 .addButton {
-    border-radius: 0px !important;
-    margin-left: 25px !important;
-    width: 90px;
-    height: 40px;
+  border-radius: 0px !important;
+  margin-left: 25px !important;
+  width: 90px;
+  height: 40px;
 }
 
 .closeButton {
-    border-radius: 0px;
-    width: 90px;
-    height: 40px;
-    border-radius: 0px !important;
-
+  border-radius: 0px;
+  width: 90px;
+  height: 40px;
+  border-radius: 0px !important;
 }
 
 .containerAddButton {
-    border-radius: 0px !important;
-    margin-left: 25px !important;
-    width: 90px;
-    height: 40px;
-    position: absolute !important;
-    right: 25px;
-    bottom: 15px;
+  border-radius: 0px !important;
+  margin-left: 25px !important;
+  width: 90px;
+  height: 40px;
+  position: absolute !important;
+  right: 25px;
+  bottom: 15px;
 }
 
-
 .containerResetButton {
-    border-radius: 0px !important;
-    width: 90px;
-    height: 40px;
-    position: fixed !important;
-    left: 25px;
-    bottom: 15px;
+  border-radius: 0px !important;
+  width: 90px;
+  height: 40px;
+  position: fixed !important;
+  left: 25px;
+  bottom: 15px;
 }
 
 .containerExportButton {
-    border-radius: 0px !important;
-    margin-left: 25px !important;
-    width: 90px;
-    height: 40px;
-    position: fixed !important;
-    right: 25px;
-    bottom: 70px;
+  border-radius: 0px !important;
+  margin-left: 25px !important;
+  width: 90px;
+  height: 40px;
+  position: fixed !important;
+  right: 25px;
+  bottom: 70px;
 }
 
 .containerImportButton {
-    border-radius: 0px !important;
-    margin-left: 25px !important;
-    width: 90px;
-    height: 40px;
-    position: fixed !important;
-    right: 25px;
-    bottom: 15px;
+  border-radius: 0px !important;
+  margin-left: 25px !important;
+  width: 90px;
+  height: 40px;
+  position: fixed !important;
+  right: 25px;
+  bottom: 15px;
 }
 
 .activityInputContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .timePicker {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 136px;
-    justify-content: space-between;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 136px;
+  justify-content: space-between;
 }
 
 .dayPicker {
-    margin-left: 24px;
+  margin-left: 24px;
 }
 
 .lecturerLabelContainer {
-    padding-top: 15px;
+  padding-top: 15px;
 }
 
 .lecturerDayContainer {
-    display: flex;
+  display: flex;
 }
 
 .lecturerTimePickerContainer {
-    display: flex;
-    flex-direction: row;
-    width: 480px;
-    justify-content: space-between;
-    margin-right: 15px;
+  display: flex;
+  flex-direction: row;
+  width: 480px;
+  justify-content: space-between;
+  margin-right: 15px;
 }
 
 .availableHeader {
-    height: 40px;
-    line-height: 60px;
-    border-bottom: 1px solid #64748B;
+  height: 40px;
+  line-height: 60px;
+  border-bottom: 1px solid #64748b;
 }
 
 .inputFile {
-    display: none;
+  display: none;
 }
 
 .formFileUpload {
-    height: 16rem;
-    width: 28rem;
-    max-width: 100%;
-    text-align: center;
-    position: relative;
+  height: 16rem;
+  width: 28rem;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
 }
 
 .inputFileUpload {
-    display: none;
+  display: none;
 }
 
 .labelFileUpload {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 1px;
-    border-style: dashed;
-    border-color: #cbd5e1;
-    background-color: #f8fafc;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
 }
 
-
 .labelFileUploaded {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #64748B;
-    background-color: #edf5ff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #64748b;
+  background-color: #edf5ff;
 }
 
 .dragActive {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-style: dashed;
-    border-color: #cbd5e1;
-    background-color: #ffffff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background-color: #ffffff;
 }
 
 .fileUploadIcon {
-    height: 120px !important;
-    width: 120px !important;
+  height: 120px !important;
+  width: 120px !important;
 }
 
 .uploadButton {
-    cursor: pointer;
-    padding: 0.25rem;
-    font-size: 1rem;
-    border: none;
-    background-color: transparent;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
 }
 
 .uploadButton:hover {
-    text-decoration-line: underline;
+  text-decoration-line: underline;
 }
 
 .dragFileElement {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 1rem;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
 .timeSlot {
-    display: grid;
-    grid-template-columns: 6fr 1fr 12fr 12fr 12fr 12fr 12fr;
-    grid-template-rows: 40px 60px;
-    margin-top: 24px;
-    text-align: center;
-    position: relative;
-    margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: 6fr 1fr 12fr 12fr 12fr 12fr 12fr;
+  grid-template-rows: 40px 60px;
+  margin-top: 24px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 48px;
 }
 
 .helperWrapper {
-    height: 26px;
-    line-height: 26px;
-    display: flex;
-    justify-content: flex-start;
+  height: 26px;
+  line-height: 26px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .helper {
-    position: absolute;
-    width: 240px;
-    height: 52px;
-    right: 0px;
-    top: -76px;
+  position: absolute;
+  width: 240px;
+  height: 52px;
+  right: 0px;
+  top: -76px;
 }
 
 .helperText {
-    width: 142px;
-    margin-right: 30px;
+  width: 142px;
+  margin-right: 30px;
 }
 
 .allowed {
-    width: 12px;
-    height: 12px;
-    background-color: #64748B;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: #64748b;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 20px;
 }
 
 .preferred {
-    width: 12px;
-    height: 12px;
-    background-color: #152D4F;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: #152d4f;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 20px;
 }
 
 .borderLine {
-    border-top: 1px solid rgb(218, 220, 224);
+  border-top: 1px solid rgb(218, 220, 224);
 }
 
 .timeSlotHeader {
-    color: #64748B;
-    height: 40px;
-    border-left: 1px solid rgb(218, 220, 224) !important;
-    border-radius: 0px !important;
-    line-height: 40px;
+  color: #64748b;
+  height: 40px;
+  border-left: 1px solid rgb(218, 220, 224) !important;
+  border-radius: 0px !important;
+  line-height: 40px;
 }
 
 .timeSlotCellNone {
-    color: #64748B;
-    border-radius: 0px !important;
-    min-height: 60px;
-    line-height: 60px;
-    border-left: 1px solid rgb(218, 220, 224) !important;
+  color: #64748b;
+  border-radius: 0px !important;
+  min-height: 60px;
+  line-height: 60px;
+  border-left: 1px solid rgb(218, 220, 224) !important;
 
-    border-top: 1px solid rgb(218, 220, 224) !important;
+  border-top: 1px solid rgb(218, 220, 224) !important;
 }
 
 .timeSlotCell {
-    color: white !important;
-    border-radius: 0px !important;
-    min-height: 60px;
-    line-height: 60px;
-    border-left: 1px solid rgb(218, 220, 224) !important;
+  color: white !important;
+  border-radius: 0px !important;
+  min-height: 60px;
+  line-height: 60px;
+  border-left: 1px solid rgb(218, 220, 224) !important;
 
-    border-top: 1px solid rgb(218, 220, 224) !important;
+  border-top: 1px solid rgb(218, 220, 224) !important;
 }
 
 .timeSlotLastCellNone {
-    color: #64748B;
-    min-height: 60px;
-    line-height: 60px;
-    border-radius: 0px !important;
-    border-right: 1px solid rgb(218, 220, 224) !important;
+  color: #64748b;
+  min-height: 60px;
+  line-height: 60px;
+  border-radius: 0px !important;
+  border-right: 1px solid rgb(218, 220, 224) !important;
 
-    border-left: 1px solid rgb(218, 220, 224) !important;
+  border-left: 1px solid rgb(218, 220, 224) !important;
 
-    border-top: 1px solid rgb(218, 220, 224) !important;
+  border-top: 1px solid rgb(218, 220, 224) !important;
 }
 
 .timeSlotLastCell {
-    color: white !important;
-    min-height: 60px;
-    line-height: 60px;
-    border-radius: 0px !important;
-    border-right: 1px solid rgb(218, 220, 224) !important;
+  color: white !important;
+  min-height: 60px;
+  line-height: 60px;
+  border-radius: 0px !important;
+  border-right: 1px solid rgb(218, 220, 224) !important;
 
-    border-left: 1px solid rgb(218, 220, 224) !important;
+  border-left: 1px solid rgb(218, 220, 224) !important;
 
-    border-top: 1px solid rgb(218, 220, 224) !important;
+  border-top: 1px solid rgb(218, 220, 224) !important;
 }
 
 .timeHeader {
-    position: relative;
+  position: relative;
 }
 
 .timeHeaderValue {
-    width: 100%;
-    height: 100%;
-    border-radius: 0px !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px !important;
 }

@@ -60,9 +60,9 @@ const theme = createTheme({
  */
 const GeneratePage = () => {
   const [tab, setTab] = React.useState("module");
-  const [activityModule, setActivityModule] = React.useState(null);
+  const [activityModule, setActivityModule] = React.useState("");
   const [activityActivities, setActivityActivities] = React.useState([]);
-  const [activityActivity, setActivityActivity] = React.useState([]);
+  const [activityActivity, setActivityActivity] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
   const [activities, setActivities] = React.useState([
@@ -241,9 +241,9 @@ const GeneratePage = () => {
   const [roomAllowedTime, setRoomAllowedTime] = React.useState({});
   const [roomPreferredTime, setRoomPreferredTime] = React.useState({});
   const [lecturerActivityAssign, setLecturerActivityAssign] =
-    React.useState(null);
+    React.useState("");
   const [lecturerAssign, setLecturerAssign] = React.useState([]);
-  const [roomActivityAssign, setRoomActivityAssign] = React.useState(null);
+  const [roomActivityAssign, setRoomActivityAssign] = React.useState("");
   const [roomAssign, setRoomAssign] = React.useState([]);
   const [activityAllowedLecturers, setActivityAllowedLecturers] =
     React.useState({});
@@ -728,32 +728,6 @@ const GeneratePage = () => {
     // console.log(data)
   };
 
-  const parseToSolverJson = () => {
-    // console.log(userInput)
-
-    Object.keys(userInput).forEach((key) => {
-      switch (key) {
-        case "umodules":
-          setModuleMapperHelper(userInput);
-          break;
-        case "activities":
-          setActivityTimeHelper(userInput);
-          break;
-        case "lecturers":
-          setLecturerMapperHelper(userInput);
-          break;
-        case "rooms":
-          setRoomMapperHelper(userInput);
-          break;
-        case "assign":
-          setAssignedMapperHelper(userInput);
-          break;
-        default:
-          break;
-      }
-    });
-  };
-
   const exportJson = () => {
     // console.log((localStorage.getItem('userInfo')))
     const element = document.createElement("a");
@@ -771,26 +745,20 @@ const GeneratePage = () => {
 
     switch (tab) {
       case "module":
-        userInfo = {
-          ...userInput,
-          umodules: {
-            ...userInput.umodules,
-            [umodule.id]: umodule,
-          },
-        };
+        if (umodule.id === "" && umodule.activities.length === 0) {
+          alert("You have to add any value to add module.");
+          return;
+        }
 
-        setUserInput(userInfo);
+        if (umodule.id === "") {
+          alert("You have to set the module name.");
+          return;
+        }
 
-        setUModule({
-          id: "",
-          activities: [],
-        });
-        setModuleID("");
-        setChecked([]);
-        setModules([...modules, umodule.id]);
-
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setModuleMapperHelper(userInfo);
+        if (umodule.activities.length === 0) {
+          alert("You have to set the activity.");
+          return;
+        }
 
         if (
           window.confirm(
@@ -800,6 +768,27 @@ const GeneratePage = () => {
               umodule.activities
           )
         ) {
+          userInfo = {
+            ...userInput,
+            umodules: {
+              ...userInput.umodules,
+              [umodule.id]: umodule,
+            },
+          };
+
+          setUserInput(userInfo);
+
+          setUModule({
+            id: "",
+            activities: [],
+          });
+          setModuleID("");
+          setChecked([]);
+          setModules([...modules, umodule.id]);
+
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setModuleMapperHelper(userInfo);
+
           setTab("activity");
         } else {
           return;
@@ -807,144 +796,20 @@ const GeneratePage = () => {
 
         break;
       case "activity":
-        userInfo = {
-          ...userInput,
-          activities: {
-            ...userInput.activities,
-            [activityModule]: {
-              ...userInput.activities[activityModule],
-              [activityActivity]: {
-                allowed: activityAllowedTimeSlot,
-                preferred: activityPreferredTimeSlot,
-                activityPerWeek: activityPerWeek,
-              },
-            },
-          },
-        };
+        if (activityModule === "" && activityActivity === "") {
+          alert("You have to add any value to add activity.");
+          return;
+        }
 
-        setUserInput(userInfo);
+        if (activityModule === "") {
+          alert("You have to select the module name.");
+          return;
+        }
 
-        setUserInputActivity({
-          activityModule: "",
-          activity: "",
-          allowed: [],
-          preferred: [],
-        });
-
-        setActivityModule("");
-        setActivityActivities([]);
-        setActivityActivity("");
-
-        setActivityPerWeek(1);
-
-        setActivityAllowedTimeSlot([
-          ["1", "9"],
-          ["1", "10"],
-          ["1", "11"],
-          ["1", "12"],
-          ["1", "13"],
-          ["1", "14"],
-          ["1", "15"],
-          ["1", "16"],
-          ["2", "9"],
-          ["2", "10"],
-          ["2", "11"],
-          ["2", "12"],
-          ["2", "13"],
-          ["2", "14"],
-          ["2", "15"],
-          ["2", "16"],
-          ["3", "9"],
-          ["3", "10"],
-          ["3", "11"],
-          ["3", "12"],
-          ["3", "13"],
-          ["3", "14"],
-          ["3", "15"],
-          ["3", "16"],
-          ["4", "9"],
-          ["4", "10"],
-          ["4", "11"],
-          ["4", "12"],
-          ["4", "13"],
-          ["4", "14"],
-          ["4", "15"],
-          ["4", "16"],
-          ["5", "9"],
-          ["5", "10"],
-          ["5", "11"],
-          ["5", "12"],
-          ["5", "13"],
-          ["5", "14"],
-          ["5", "15"],
-          ["5", "16"],
-        ]);
-        setActivityPreferredTimeSlot([]);
-        setActivityTimeSlotStatus({
-          1: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          2: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          3: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          4: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          5: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-        });
-
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setActivityTimeHelper(userInfo);
+        if (activityActivity === "") {
+          alert("You have to select the activity name.");
+          return;
+        }
 
         if (
           window.confirm(
@@ -954,6 +819,145 @@ const GeneratePage = () => {
               activityActivity
           )
         ) {
+          userInfo = {
+            ...userInput,
+            activities: {
+              ...userInput.activities,
+              [activityModule]: {
+                ...userInput.activities[activityModule],
+                [activityActivity]: {
+                  allowed: activityAllowedTimeSlot,
+                  preferred: activityPreferredTimeSlot,
+                  activityPerWeek: activityPerWeek,
+                },
+              },
+            },
+          };
+
+          setUserInput(userInfo);
+
+          setUserInputActivity({
+            activityModule: "",
+            activity: "",
+            allowed: [],
+            preferred: [],
+          });
+
+          setActivityModule("");
+          setActivityActivities([]);
+          setActivityActivity("");
+
+          setActivityPerWeek(1);
+
+          setActivityAllowedTimeSlot([
+            ["1", "9"],
+            ["1", "10"],
+            ["1", "11"],
+            ["1", "12"],
+            ["1", "13"],
+            ["1", "14"],
+            ["1", "15"],
+            ["1", "16"],
+            ["2", "9"],
+            ["2", "10"],
+            ["2", "11"],
+            ["2", "12"],
+            ["2", "13"],
+            ["2", "14"],
+            ["2", "15"],
+            ["2", "16"],
+            ["3", "9"],
+            ["3", "10"],
+            ["3", "11"],
+            ["3", "12"],
+            ["3", "13"],
+            ["3", "14"],
+            ["3", "15"],
+            ["3", "16"],
+            ["4", "9"],
+            ["4", "10"],
+            ["4", "11"],
+            ["4", "12"],
+            ["4", "13"],
+            ["4", "14"],
+            ["4", "15"],
+            ["4", "16"],
+            ["5", "9"],
+            ["5", "10"],
+            ["5", "11"],
+            ["5", "12"],
+            ["5", "13"],
+            ["5", "14"],
+            ["5", "15"],
+            ["5", "16"],
+          ]);
+          setActivityPreferredTimeSlot([]);
+          setActivityTimeSlotStatus({
+            1: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            2: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            3: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            4: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            5: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+          });
+
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setActivityTimeHelper(userInfo);
+
           setTab("lecturer");
         } else {
           return;
@@ -961,132 +965,137 @@ const GeneratePage = () => {
 
         break;
       case "lecturer":
-        let lecturerTimeSlot = {
-          allowed: activityAllowedTimeSlot,
-          preferred: activityPreferredTimeSlot,
-        };
-
-        userInfo = {
-          ...userInput,
-          lecturers: {
-            ...userInput.lecturers,
-            [lecturerName]: lecturerTimeSlot,
-          },
-        };
-
-        setUserInput(userInfo);
-
-        setLecturerName("");
-        setActivityAllowedTimeSlot([
-          ["1", "9"],
-          ["1", "10"],
-          ["1", "11"],
-          ["1", "12"],
-          ["1", "13"],
-          ["1", "14"],
-          ["1", "15"],
-          ["1", "16"],
-          ["2", "9"],
-          ["2", "10"],
-          ["2", "11"],
-          ["2", "12"],
-          ["2", "13"],
-          ["2", "14"],
-          ["2", "15"],
-          ["2", "16"],
-          ["3", "9"],
-          ["3", "10"],
-          ["3", "11"],
-          ["3", "12"],
-          ["3", "13"],
-          ["3", "14"],
-          ["3", "15"],
-          ["3", "16"],
-          ["4", "9"],
-          ["4", "10"],
-          ["4", "11"],
-          ["4", "12"],
-          ["4", "13"],
-          ["4", "14"],
-          ["4", "15"],
-          ["4", "16"],
-          ["5", "9"],
-          ["5", "10"],
-          ["5", "11"],
-          ["5", "12"],
-          ["5", "13"],
-          ["5", "14"],
-          ["5", "15"],
-          ["5", "16"],
-        ]);
-        setActivityPreferredTimeSlot([]);
-        setActivityTimeSlotStatus({
-          1: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          2: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          3: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          4: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          5: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-        });
-
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setLecturerMapperHelper(userInfo);
+        if (lecturerName === "") {
+          alert("You have to set the lecturer name to add lecturer.");
+          return;
+        }
 
         if (window.confirm("Do you want to add\nLecturer: " + lecturerName)) {
+          let lecturerTimeSlot = {
+            allowed: activityAllowedTimeSlot,
+            preferred: activityPreferredTimeSlot,
+          };
+
+          userInfo = {
+            ...userInput,
+            lecturers: {
+              ...userInput.lecturers,
+              [lecturerName]: lecturerTimeSlot,
+            },
+          };
+
+          setUserInput(userInfo);
+
+          setLecturerName("");
+          setActivityAllowedTimeSlot([
+            ["1", "9"],
+            ["1", "10"],
+            ["1", "11"],
+            ["1", "12"],
+            ["1", "13"],
+            ["1", "14"],
+            ["1", "15"],
+            ["1", "16"],
+            ["2", "9"],
+            ["2", "10"],
+            ["2", "11"],
+            ["2", "12"],
+            ["2", "13"],
+            ["2", "14"],
+            ["2", "15"],
+            ["2", "16"],
+            ["3", "9"],
+            ["3", "10"],
+            ["3", "11"],
+            ["3", "12"],
+            ["3", "13"],
+            ["3", "14"],
+            ["3", "15"],
+            ["3", "16"],
+            ["4", "9"],
+            ["4", "10"],
+            ["4", "11"],
+            ["4", "12"],
+            ["4", "13"],
+            ["4", "14"],
+            ["4", "15"],
+            ["4", "16"],
+            ["5", "9"],
+            ["5", "10"],
+            ["5", "11"],
+            ["5", "12"],
+            ["5", "13"],
+            ["5", "14"],
+            ["5", "15"],
+            ["5", "16"],
+          ]);
+          setActivityPreferredTimeSlot([]);
+          setActivityTimeSlotStatus({
+            1: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            2: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            3: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            4: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            5: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+          });
+
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setLecturerMapperHelper(userInfo);
+
           setTab("room");
         } else {
           return;
@@ -1094,163 +1103,207 @@ const GeneratePage = () => {
 
         break;
       case "room":
-        userInfo = {
-          ...userInput,
-          rooms: {
-            ...userInput.rooms,
-            [roomID]: {
-              allowed: activityAllowedTimeSlot,
-              preferred: activityPreferredTimeSlot,
-            },
-          },
-        };
-
-        setRoomID("");
-        setActivityAllowedTimeSlot([
-          ["1", "9"],
-          ["1", "10"],
-          ["1", "11"],
-          ["1", "12"],
-          ["1", "13"],
-          ["1", "14"],
-          ["1", "15"],
-          ["1", "16"],
-          ["2", "9"],
-          ["2", "10"],
-          ["2", "11"],
-          ["2", "12"],
-          ["2", "13"],
-          ["2", "14"],
-          ["2", "15"],
-          ["2", "16"],
-          ["3", "9"],
-          ["3", "10"],
-          ["3", "11"],
-          ["3", "12"],
-          ["3", "13"],
-          ["3", "14"],
-          ["3", "15"],
-          ["3", "16"],
-          ["4", "9"],
-          ["4", "10"],
-          ["4", "11"],
-          ["4", "12"],
-          ["4", "13"],
-          ["4", "14"],
-          ["4", "15"],
-          ["4", "16"],
-          ["5", "9"],
-          ["5", "10"],
-          ["5", "11"],
-          ["5", "12"],
-          ["5", "13"],
-          ["5", "14"],
-          ["5", "15"],
-          ["5", "16"],
-        ]);
-        setActivityPreferredTimeSlot([]);
-        setActivityTimeSlotStatus({
-          1: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          2: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          3: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          4: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          5: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-        });
-
-        setUserInput(userInfo);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setRoomMapperHelper(userInfo);
+        if (roomID === "") {
+          alert("You have to set the room name to add room.");
+          return;
+        }
 
         if (window.confirm("Do you want to add\nRoom: " + roomID)) {
-          setTab("assign");
+          userInfo = {
+            ...userInput,
+            rooms: {
+              ...userInput.rooms,
+              [roomID]: {
+                allowed: activityAllowedTimeSlot,
+                preferred: activityPreferredTimeSlot,
+              },
+            },
+          };
+
+          setRoomID("");
+          setActivityAllowedTimeSlot([
+            ["1", "9"],
+            ["1", "10"],
+            ["1", "11"],
+            ["1", "12"],
+            ["1", "13"],
+            ["1", "14"],
+            ["1", "15"],
+            ["1", "16"],
+            ["2", "9"],
+            ["2", "10"],
+            ["2", "11"],
+            ["2", "12"],
+            ["2", "13"],
+            ["2", "14"],
+            ["2", "15"],
+            ["2", "16"],
+            ["3", "9"],
+            ["3", "10"],
+            ["3", "11"],
+            ["3", "12"],
+            ["3", "13"],
+            ["3", "14"],
+            ["3", "15"],
+            ["3", "16"],
+            ["4", "9"],
+            ["4", "10"],
+            ["4", "11"],
+            ["4", "12"],
+            ["4", "13"],
+            ["4", "14"],
+            ["4", "15"],
+            ["4", "16"],
+            ["5", "9"],
+            ["5", "10"],
+            ["5", "11"],
+            ["5", "12"],
+            ["5", "13"],
+            ["5", "14"],
+            ["5", "15"],
+            ["5", "16"],
+          ]);
+          setActivityPreferredTimeSlot([]);
+          setActivityTimeSlotStatus({
+            1: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            2: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            3: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            4: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+            5: {
+              9: 1,
+              10: 1,
+              11: 1,
+              12: 1,
+              13: 1,
+              14: 1,
+              15: 1,
+              16: 1,
+              // '17': 1,
+              // '18': 0
+            },
+          });
+
+          setUserInput(userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setRoomMapperHelper(userInfo);
+
+          setTab("assignL");
+        } else {
+          return;
         }
 
         break;
-      case "assign":
-        userInfo = {
-          ...userInput,
-          assigned: {
-            ...userInput.assigned,
-            lecturers: {
-              ...userInput.assigned.lecturers,
-              [lecturerActivityAssign]: lecturerAssign,
+      case "assignL":
+        if (
+          window.confirm(
+            "Do you want to add\n" +
+              lecturerActivityAssign +
+              ": " +
+              lecturerAssign
+          )
+        ) {
+          userInfo = {
+            ...userInput,
+            assigned: {
+              ...userInput.assigned,
+              rooms: {
+                ...userInput.assigned.rooms,
+              },
+              lecturers: {
+                ...userInput.assigned.lecturers,
+                [lecturerActivityAssign]: lecturerAssign,
+              },
             },
-            rooms: {
-              ...userInput.assigned.rooms,
-              [roomActivityAssign]: roomAssign,
+          };
+
+          setUserInput(userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setAssignedMapperHelper(userInfo);
+
+          setTab("assignR");
+        } else {
+          return;
+        }
+
+        break;
+      case "assignR":
+        if (
+          window.confirm(
+            "Do you want to add\n" +
+              lecturerActivityAssign +
+              ": " +
+              lecturerAssign +
+              "\n" +
+              roomActivityAssign +
+              ": " +
+              roomAssign
+          )
+        ) {
+          userInfo = {
+            ...userInput,
+            assigned: {
+              ...userInput.assigned,
+              lecturers: {
+                ...userInput.assigned.lecturers,
+              },
+              rooms: {
+                ...userInput.assigned.rooms,
+                [roomActivityAssign]: roomAssign,
+              },
             },
-          },
-        };
+          };
 
-        window.confirm(
-          "Do you want to add\n" +
-            lecturerActivityAssign +
-            ": " +
-            lecturerAssign +
-            "\n" +
-            roomActivityAssign +
-            ": " +
-            roomAssign
-        );
+          setUserInput(userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          setAssignedMapperHelper(userInfo);
+        } else {
+          return;
+        }
 
-        setUserInput(userInfo);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        setAssignedMapperHelper(userInfo);
         break;
       default:
         alert("Error!");
@@ -2525,6 +2578,10 @@ const GeneratePage = () => {
   };
 
   const tabContentHandler = () => {
+    let moduleOptions = [];
+    let lecturerOptions = [];
+    let roomOptions = [];
+
     switch (tab) {
       /**
        * Module Tab
@@ -2641,14 +2698,12 @@ const GeneratePage = () => {
               <ThemeProvider theme={theme}>
                 <Autocomplete
                   required
-                  // inputValue={activityModule}
-                  value={activityModule}
                   onChange={(event, newValue) => {
                     activityModuleHandler(newValue);
                   }}
                   id="standard-required"
                   variant="standard"
-                  autoComplete
+                  disableClearable
                   className={styles.input}
                   options={modules}
                   renderInput={(params) => (
@@ -2759,24 +2814,37 @@ const GeneratePage = () => {
             {timeSlotRender()}
           </div>
         );
-      case "assign":
-        let moduleOptions = [];
-        let lecturerOptions = [];
-        let roomOptions = [];
+      case "assignL":
+        moduleOptions = [];
+        lecturerOptions = [];
+        roomOptions = [];
 
         if (moduleMapper)
           Object.keys(moduleMapper).forEach((key) => {
-            moduleOptions = [...moduleOptions, moduleMapper[key]];
+            let activitiesAssign = moduleMapper[key].split(".");
+            let moduleIDAssign = "";
+
+            activitiesAssign.forEach((value, index) => {
+              if (index < activitiesAssign.length - 1) {
+                moduleIDAssign += value;
+                moduleIDAssign += ".";
+              }
+            });
+
+            moduleIDAssign = moduleIDAssign.slice(0, -1);
+
+            let activityAssign = activitiesAssign[activitiesAssign.length - 1];
+
+            if (userInput.activities[moduleIDAssign]) {
+              if (userInput.activities[moduleIDAssign][activityAssign]) {
+                moduleOptions = [...moduleOptions, moduleMapper[key]];
+              }
+            }
           });
 
         if (lecturerMapper)
           Object.keys(lecturerMapper).forEach((key) => {
             lecturerOptions = [...lecturerOptions, lecturerMapper[key]];
-          });
-
-        if (roomMapper)
-          Object.keys(roomMapper).forEach((key) => {
-            roomOptions = [...roomOptions, roomMapper[key]];
           });
 
         return (
@@ -2785,10 +2853,11 @@ const GeneratePage = () => {
               <div>
                 <ThemeProvider theme={theme}>
                   <Autocomplete
-                    value={lecturerActivityAssign}
+                    // value={lecturerActivityAssign}
                     onChange={(event, newValue) => {
                       setLecturerActivityAssign(newValue);
                     }}
+                    disableClearable
                     className={styles.assignInput}
                     options={moduleOptions}
                     renderInput={(params) => (
@@ -2832,17 +2901,54 @@ const GeneratePage = () => {
                   />
                 </ThemeProvider>
               </div>
-              <div></div>
             </div>
+          </div>
+        );
+      case "assignR":
+        moduleOptions = [];
+        lecturerOptions = [];
+        roomOptions = [];
+
+        if (moduleMapper)
+          Object.keys(moduleMapper).forEach((key) => {
+            let activitiesAssign = moduleMapper[key].split(".");
+            let moduleIDAssign = "";
+
+            activitiesAssign.forEach((value, index) => {
+              if (index < activitiesAssign.length - 1) {
+                moduleIDAssign += value;
+                moduleIDAssign += ".";
+              }
+            });
+
+            moduleIDAssign = moduleIDAssign.slice(0, -1);
+
+            let activityAssign = activitiesAssign[activitiesAssign.length - 1];
+
+            if (userInput.activities[moduleIDAssign]) {
+              if (userInput.activities[moduleIDAssign][activityAssign]) {
+                moduleOptions = [...moduleOptions, moduleMapper[key]];
+              }
+            }
+          });
+
+        if (roomMapper)
+          Object.keys(roomMapper).forEach((key) => {
+            roomOptions = [...roomOptions, roomMapper[key]];
+          });
+
+        return (
+          <div>
             <div>
               <div>
                 <div>
                   <ThemeProvider theme={theme}>
                     <Autocomplete
-                      value={roomActivityAssign}
+                      // value={roomActivityAssign}
                       onChange={(event, newValue) => {
                         setRoomActivityAssign(newValue);
                       }}
+                      disableClearable
                       className={styles.assignInput}
                       options={moduleOptions}
                       renderInput={(params) => (
@@ -2878,7 +2984,7 @@ const GeneratePage = () => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label="Assign a lecturer for the activity"
+                          label="Assign a room for the activity"
                           color="gray"
                           variant="standard"
                         />
@@ -2901,9 +3007,9 @@ const GeneratePage = () => {
       case "umodule":
         break;
       case "activity":
-        setActivityModule(null);
+        setActivityModule("");
         setLecturerAssign([]);
-        setLecturerActivityAssign(null);
+        setLecturerActivityAssign("");
         setRoomAssign([]);
       case "lecturer":
       case "room":
@@ -3032,12 +3138,18 @@ const GeneratePage = () => {
           5: 1,
         });
         break;
-      case "assign":
+      case "assignL":
         setActivityModule(null);
         setLecturerAssign([]);
         setLecturerActivityAssign(null);
+
+        break;
+
+      case "assignR":
+        setActivityModule(null);
         setRoomAssign([]);
         setRoomActivityAssign(null);
+
         break;
       default:
         break;
@@ -3124,24 +3236,24 @@ const GeneratePage = () => {
 
         <div
           className={
-            tab === "room"
-              ? styles.containerHeader4Active
-              : styles.containerHeader4
+            tab === "assignL"
+              ? styles.containerHeader5Active
+              : styles.containerHeader5
           }
-          onClick={() => tabHandler("room")}
+          onClick={() => tabHandler("assignL")}
         >
-          Room
+          Assign Lecutrer
         </div>
 
         <div
           className={
-            tab === "assign"
-              ? styles.containerHeader5Active
-              : styles.containerHeader5
+            tab === "assignR"
+              ? styles.containerHeader6Active
+              : styles.containerHeader6
           }
-          onClick={() => tabHandler("assign")}
+          onClick={() => tabHandler("assignR")}
         >
-          Assign Activity
+          Assign Room
         </div>
 
         {tabContentHandler()}
