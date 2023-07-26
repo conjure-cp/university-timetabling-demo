@@ -80,30 +80,29 @@ Create a new module named **CS1002**
 
 Create **lecture** activity for **CS1002** 
 
-### Create new lecture
+### Create new lecturer
 
-![Create User](screenshots/create-user.gif)
+![Create Lecturer](screenshots/create-lecturer.gif)
 
-Create a user named **John Smith** managing the **Planning** tasks. He prefers to take over the **Design database schema** task.
+Create lecturer **Ruth Leatham**
 
 ### Create new room
 
 ![Create Room](screenshots/create-room.gif)
 
-Create a user named **John Smith** managing the **Planning** tasks. He prefers to take over the **Design database schema** task.
+Create room **JH110**
 
-### Assign lecture
+### Assign lecturer
 
-![Assign Lecture](screenshots/assign-lecture.gif)
+![Assign Lecturer](screenshots/assign-lecturer.gif)
 
-Create a user named **John Smith** managing the **Planning** tasks. He prefers to take over the **Design database schema** task.
+Assign lecturer **Ruth** to **CS1002**
 
 ### Assign room
 
 ![Assign Room](screenshots/assign-room.gif)
 
-Create a user named **John Smith** managing the **Planning** tasks. He prefers to take over the **Design database schema** task.
-
+Assign **JH110** to **CS1002**
 
 #### Bugs and errors
 - If you find and buys or errors please email me(iwg6852@gmail.com), I will try to fix it ASAP.
