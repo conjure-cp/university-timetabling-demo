@@ -76,7 +76,7 @@ Create a new module named **CS1002**
 
 ### Create new activity
 
-![Create Activity](screenshots/creat-activity.gif)
+![Create Activity](screenshots/create-activity.gif)
 
 Create **lecture** activity for **CS1002** 
 
@@ -104,5 +104,5 @@ Assign lecturer **Ruth** to **CS1002**
 
 Assign **JH110** to **CS1002**
 
-#### Bugs and errors
+## Bugs and errors
 - If you find and buys or errors please email me(iwg6852@gmail.com), I will try to fix it ASAP.
