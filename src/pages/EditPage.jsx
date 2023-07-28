@@ -1,12 +1,14 @@
 import * as React from "react";
 
 import IconButton from "@mui/material/IconButton";
-
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import styles from "../assets/pages/EditPage.module.css";
-import { ExpandLess, ExpandMore, ModeEdit, Delete } from "@mui/icons-material";
+import { ModeEdit, Delete } from "@mui/icons-material";
 import { Autocomplete, Chip, TextField, Button } from "@mui/material";
-import Timeslot from "../components/Timeslot/Timeslot";
+
+import Timeslot         from "../components/Timeslot/Timeslot";
+import ExpandableSection from "../components/ExpandableSection";
+
+import styles from "../assets/pages/EditPage.module.css";
 
 const theme = createTheme({
   status: {
@@ -182,10 +184,10 @@ class EditPage extends React.Component {
           },
         });
       } else if (tab === "activity") {
-        let activityState = this.state.userInput.activities;
+        let activityState    = this.state.userInput.activities;
 
         let assignedLecturer = this.state.userInput.assigned.lecturers;
-        let assignedRoom = this.state.userInput.assigned.rooms;
+        let assignedRoom     = this.state.userInput.assigned.rooms;
 
         Object.keys(activityState).forEach((moduleID) => {
           Object.keys(activityState[moduleID]).forEach((activity) => {
@@ -217,7 +219,7 @@ class EditPage extends React.Component {
         });
       } else if (tab === "lecturer") {
         let assignedLecturer = this.state.userInput.assigned.lecturers;
-        let lecturers = this.state.userInput.lecturers;
+        let lecturers        = this.state.userInput.lecturers;
 
         Object.keys(lecturers).forEach((lecturer) => {
           if (id === lecturer) {
@@ -227,10 +229,7 @@ class EditPage extends React.Component {
 
         Object.keys(assignedLecturer).forEach((moduleActivity) => {
           if (assignedLecturer[moduleActivity].includes(id)) {
-            assignedLecturer[moduleActivity].splice(
-              assignedLecturer[moduleActivity].indexOf(id),
-              1
-            );
+            assignedLecturer[moduleActivity].splice(assignedLecturer[moduleActivity].indexOf(id),1);
           }
         });
 
@@ -250,7 +249,7 @@ class EditPage extends React.Component {
         });
       } else if (tab === "room") {
         let assignedRoom = this.state.userInput.assigned.rooms;
-        let rooms = this.state.userInput.rooms;
+        let rooms        = this.state.userInput.rooms;
 
         Object.keys(rooms).forEach((room) => {
           if (id === room) {
@@ -260,10 +259,7 @@ class EditPage extends React.Component {
 
         Object.keys(assignedRoom).forEach((moduleActivity) => {
           if (assignedRoom[moduleActivity].includes(id)) {
-            assignedRoom[moduleActivity].splice(
-              assignedRoom[moduleActivity].indexOf(id),
-              1
-            );
+            assignedRoom[moduleActivity].splice(assignedRoom[moduleActivity].indexOf(id),1);
           }
         });
 
@@ -311,8 +307,7 @@ class EditPage extends React.Component {
           Object.keys(moduleEditStatus).forEach((eachTab) => {
             Object.keys(moduleEditStatus[eachTab]).forEach((eachID) => {
               if (id === eachID && tab === eachTab) {
-                moduleEditStatus[eachTab][eachID] =
-                  !moduleEditStatus[eachTab][eachID];
+                moduleEditStatus[eachTab][eachID] = !moduleEditStatus[eachTab][eachID];
               } else {
                 moduleEditStatus[eachTab][eachID] = false;
               }
@@ -326,7 +321,6 @@ class EditPage extends React.Component {
         }
 
         let outterModuleEditStatus = this.state.moduleEditStatus;
-        let innerModuleEditStatus = this.state.moduleEditStatus[tab];
         let moduleState = this.state.userInput.umodules;
         let activityState = this.state.userInput.activities;
 
@@ -354,20 +348,17 @@ class EditPage extends React.Component {
         moduleState[changedValue] = moduleState[id];
         delete moduleState[id];
 
-        activityState[this.state.userInput.umodules[changedValue].id] =
-          activityState[id];
+        activityState[this.state.userInput.umodules[changedValue].id] = activityState[id];
         delete activityState[id];
 
-        outterModuleEditStatus[tab][changedValue] =
-          outterModuleEditStatus[tab][id];
+        outterModuleEditStatus[tab][changedValue] = outterModuleEditStatus[tab][id];
         delete outterModuleEditStatus[tab][id];
 
         Object.keys(outterModuleEditStatus.activity).forEach((key) => {
           if (key.includes(id)) {
             let newKey = key.replace(id, changedValue);
 
-            outterModuleEditStatus.activity[newKey] =
-              outterModuleEditStatus.activity[key];
+            outterModuleEditStatus.activity[newKey] = outterModuleEditStatus.activity[key];
             delete outterModuleEditStatus.activity[key];
           }
         });
@@ -375,8 +366,7 @@ class EditPage extends React.Component {
           if (key.includes(id)) {
             let newKey = key.replace(id, changedValue);
 
-            outterModuleEditStatus.assigned[newKey] =
-              outterModuleEditStatus.assigned[key];
+            outterModuleEditStatus.assigned[newKey] = outterModuleEditStatus.assigned[key];
             delete outterModuleEditStatus.assigned[key];
           }
         });
@@ -422,7 +412,7 @@ class EditPage extends React.Component {
         }
       } else if (tab === "room") {
         if (this.state.tempText) {
-          let roomState = this.state.userInput.rooms;
+          let roomState         = this.state.userInput.rooms;
           let innerModuleEditStatus = this.state.moduleEditStatus[tab];
 
           let assignedRoom = this.state.userInput.assigned.rooms;
@@ -430,8 +420,7 @@ class EditPage extends React.Component {
           roomState[this.state.tempText] = roomState[id];
           delete roomState[id];
 
-          innerModuleEditStatus[this.state.tempText] =
-            innerModuleEditStatus[id];
+          innerModuleEditStatus[this.state.tempText] = innerModuleEditStatus[id];
           delete innerModuleEditStatus[id];
 
           Object.keys(assignedRoom).forEach((key) => {
@@ -461,6 +450,7 @@ class EditPage extends React.Component {
           });
         }
       } else if (tab === "assigned") {
+        //TODO empty block
       }
     }
 
@@ -862,62 +852,46 @@ class EditPage extends React.Component {
   };
 
   renderAssigned = () => {
-    let tempDiv = [];
-
-    let lecturers = [];
-    let rooms = [];
-
-    if (!this.state.userInput.lecturers) {
+    const { userInput, moduleEditStatus } = this.state;
+  
+    if (!userInput.lecturers) {
       return;
     }
-
-    Object.keys(this.state.userInput.lecturers).forEach((lecturer) => {
-      lecturers.push(lecturer);
-    });
-
-    Object.keys(this.state.userInput.rooms).forEach((room) => {
-      rooms.push(room);
-    });
-
-    let assignedLecturers = this.state.userInput.assigned.lecturers;
-    let assignedRooms = this.state.userInput.assigned.rooms;
-
-    Object.keys(assignedLecturers).forEach((activity) => {
-      tempDiv = [
-        ...tempDiv,
-        <div key={activity} className={styles.module}>
+  
+    const lecturers = Object.keys(userInput.lecturers);
+    const rooms = Object.keys(userInput.rooms);
+  
+    const { lecturers: assignedLecturers, rooms: assignedRooms } = userInput.assigned;
+  
+    const renderAssignedItem = (itemType, options, assignedItems, editFunc) => {
+      return Object.keys(assignedItems).map((activity) => (
+        <div key={`${itemType}:${activity}`} className={styles.module}>
           <IconButton
             className={styles.iconButton}
-            onClick={() => this.editState("assigned", activity + ":lecturers")}
+            onClick={() => this.editState("assigned", `${activity}:${itemType}`)}
             aria-label="delete"
           >
             <ModeEdit />
           </IconButton>
           <IconButton
             className={styles.deleteButton}
-            onClick={() =>
-              this.deleteState("assigned", activity + ":lecturers")
-            }
+            onClick={() => this.deleteState("assigned", `${activity}:${itemType}`)}
             aria-label="delete"
           >
             <Delete />
           </IconButton>
           <div className={styles.assignedID}>{activity}</div>
-          <div className={styles.assignedType}>Lecturers</div>
+          <div className={styles.assignedType}>{itemType}</div>
           <ThemeProvider theme={theme}>
             <Autocomplete
               className={styles.assignInput}
-              options={lecturers}
+              options={options}
               multiple
-              disabled={
-                !this.state.moduleEditStatus.assigned[activity + ":lecturers"]
-              }
-              value={assignedLecturers[activity]}
-              onChange={(event, newValue) => {
-                this.editAssignedLecturer(activity, newValue);
-              }}
-              renderTags={(tagValue, getTagProps) => {
-                return tagValue.map((value, index) => (
+              value={assignedItems[activity]}
+              disabled={!moduleEditStatus.assigned[`${activity}:${itemType}`]}
+              onChange={(event, newValue) => editFunc(activity, newValue)}
+              renderTags={(tagValue, getTagProps) =>
+                tagValue.map((value, index) => (
                   <Chip
                     sx={{
                       borderRadius: "0px !important",
@@ -927,82 +901,27 @@ class EditPage extends React.Component {
                     label={value}
                     {...getTagProps({ index })}
                   />
-                ));
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Assign a lecturer for the activity"
-                  color="gray"
-                  variant="standard"
-                />
-              )}
-            />
-          </ThemeProvider>
-        </div>,
-      ];
-    });
-
-    Object.keys(assignedRooms).forEach((activity) => {
-      tempDiv = [
-        ...tempDiv,
-        <div key={"room:" + activity} className={styles.module}>
-          <IconButton
-            className={styles.iconButton}
-            onClick={() => this.editState("assigned", activity + ":rooms")}
-            aria-label="delete"
-          >
-            <ModeEdit />
-          </IconButton>
-          <IconButton
-            className={styles.deleteButton}
-            onClick={() => this.deleteState("assigned", activity + ":rooms")}
-            aria-label="delete"
-          >
-            <Delete />
-          </IconButton>
-          <div className={styles.assignedID}>{activity}</div>
-          <div className={styles.assignedType}>Rooms</div>
-          <ThemeProvider theme={theme}>
-            <Autocomplete
-              className={styles.assignInput}
-              options={rooms}
-              multiple
-              value={assignedRooms[activity]}
-              disabled={
-                !this.state.moduleEditStatus.assigned[activity + ":rooms"]
+                ))
               }
-              onChange={(event, newValue) => {
-                this.editAssignedRoom(activity, newValue);
-              }}
-              renderTags={(tagValue, getTagProps) => {
-                return tagValue.map((value, index) => (
-                  <Chip
-                    sx={{
-                      borderRadius: "0px !important",
-                    }}
-                    color="gray"
-                    className={styles.chip}
-                    label={value}
-                    {...getTagProps({ index })}
-                  />
-                ));
-              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Assign a room for the activity"
+                  label={`Assign a ${itemType.slice(0, -1)} for the activity`}
                   color="gray"
                   variant="standard"
                 />
               )}
             />
           </ThemeProvider>
-        </div>,
-      ];
-    });
-    return tempDiv;
-  };
+        </div>
+      ));
+    };
+  
+    return [
+      ...renderAssignedItem("lecturers", lecturers, assignedLecturers, this.editAssignedLecturer),
+      ...renderAssignedItem("rooms", rooms, assignedRooms, this.editAssignedRoom)
+    ];
+  };  
 
   editAssignedLecturer = (activity, newValue) => {
     this.setState({
@@ -1069,8 +988,7 @@ class EditPage extends React.Component {
         <ThemeProvider theme={theme}>
           <Button
             disabled={
-              JSON.stringify(this.state.userInput) ===
-              JSON.stringify(this.state.originalUserInfo)
+              JSON.stringify(this.state.userInput) === JSON.stringify(this.state.originalUserInfo)
             }
             variant="contained"
             color="gray"
@@ -1079,110 +997,41 @@ class EditPage extends React.Component {
           >
             SAVE CHANGE
           </Button>
-          <div className={styles.header}>
-            <div className={styles.headerTitle}>Modules (Classes)</div>
-            <IconButton
-              className={styles.iconButton}
-              onClick={() => this.expand("modules")}
-              aria-label="delete"
-            >
-              {this.state.expandState.modules ? <ExpandLess /> : <ExpandMore />}
-            </IconButton>
-            <div
-              className={
-                this.state.expandState.modules ? styles.expand : styles.shrink
-              }
-            >
-              {this.renderMoudle()}
-            </div>
-          </div>
-          <div className={styles.header}>
-            <div className={styles.headerTitle}>Activities</div>
-            <IconButton
-              className={styles.iconButton}
-              onClick={() => this.expand("activities")}
-              aria-label="delete"
-            >
-              {this.state.expandState.activities ? (
-                <ExpandLess />
-              ) : (
-                <ExpandMore />
-              )}
-            </IconButton>
-            <div
-              className={
-                this.state.expandState.activities
-                  ? styles.expandActivity
-                  : styles.shrinkActivity
-              }
-            >
-              {this.renderActivity()}
-            </div>
-          </div>
-          <div className={styles.header}>
-            <div className={styles.headerTitle}>Lecturers (Staffs)</div>
-            <IconButton
-              className={styles.iconButton}
-              onClick={() => this.expand("lecturers")}
-              aria-label="delete"
-            >
-              {this.state.expandState.lecturers ? (
-                <ExpandLess />
-              ) : (
-                <ExpandMore />
-              )}
-            </IconButton>
-            <div
-              className={
-                this.state.expandState.lecturers
-                  ? styles.expandActivity
-                  : styles.shrinkActivity
-              }
-            >
-              {this.renderLecturer()}
-            </div>
-          </div>
-          <div className={styles.header}>
-            <div className={styles.headerTitle}>Rooms</div>
-            <IconButton
-              className={styles.iconButton}
-              onClick={() => this.expand("rooms")}
-              aria-label="delete"
-            >
-              {this.state.expandState.rooms ? <ExpandLess /> : <ExpandMore />}
-            </IconButton>
-            <div
-              className={
-                this.state.expandState.rooms
-                  ? styles.expandActivity
-                  : styles.shrinkActivity
-              }
-            >
-              {this.renderRoom()}
-            </div>
-          </div>
-
-          <div className={styles.header}>
-            <div className={styles.headerTitle}>Assigned</div>
-            <IconButton
-              className={styles.iconButton}
-              onClick={() => this.expand("assigned")}
-              aria-label="delete"
-            >
-              {this.state.expandState.assigned ? (
-                <ExpandLess />
-              ) : (
-                <ExpandMore />
-              )}
-            </IconButton>
-            <div
-              className={
-                this.state.expandState.assigned ? styles.expand : styles.shrink
-              }
-            >
-              {this.renderAssigned()}
-            </div>
-          </div>
+          <ExpandableSection
+            title="Modules (Classes)"
+            expandKey="modules"
+            onExpand={this.expand}
+            expandedState={this.state.expandState}
+            renderFn={this.renderMoudle}
+          />
+          <ExpandableSection
+            title="Activities"
+            expandKey="activities"
+            onExpand={this.expand}
+            expandedState={this.state.expandState}
+            renderFn={this.renderActivity}
+          />
+          <ExpandableSection
+            title="Lecturers (Staffs)"
+            expandKey="lecturers"
+            onExpand={this.expand}
+            expandedState={this.state.expandState}
+            renderFn={this.renderLecturer}
+          />
+          <ExpandableSection
+            title="Rooms"
+            expandKey="rooms"
+            onExpand={this.expand}
+            expandedState={this.state.expandState}
+            renderFn={this.renderRoom}
+          />
+          <ExpandableSection
+            title="Assigned"
+            expandKey="assigned"
+            onExpand={this.expand}
+            expandedState={this.state.expandState}
+            renderFn={this.renderAssigned}
+          />
         </ThemeProvider>
       </div>
     );
