@@ -2290,20 +2290,6 @@ const GeneratePage = () => {
                 value={roomID}
                 onChange={(event) => setRoomID(event.target.value)}
               />
-              {/* <TextField
-                            color="gray"
-                            required
-                            id="standard-required"
-                            label="Capacity"
-                            variant="standard"
-                            type="number"
-                            value={roomCapacity}
-                            onInput={(e) => {
-                                e.target.value = e.target.value < 1 ? 1 : e.target.value
-                            }}
-                            onChange={(event) => setRoomCapacity(event.target.value)}
-                            className={styles.input}
-                        /> */}
             </ThemeProvider>
             {timeSlotRender()}
           </div>
