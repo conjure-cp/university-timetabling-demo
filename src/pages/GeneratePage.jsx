@@ -17,42 +17,13 @@ import {
   Tooltip,
   Chip,
 } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+
+import { theme }            from "../utils/theme";
+import { allowed_timeslot } from "../utils/allowed_timeslot";
+import { timeslot_status }  from "../utils/timeslot_status";
 
 import styles from "../assets/pages/GeneratePage.module.css";
 import { Done, DoneAll, Info, Close } from "@mui/icons-material";
-
-/**
- * Color theme for the components
- */
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#0971f1",
-      darker: "#053e85",
-    },
-    gray: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#64748B",
-      contrastText: "#64748B",
-    },
-
-    allowed: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-    preferred: {
-      main: "#152D4F",
-      contrastText: "#fff",
-    },
-  },
-});
 
 /**
  * View for Generate Page .../generate
@@ -101,117 +72,14 @@ const GeneratePage = () => {
   const [lecturerName, setLecturerName] = React.useState("");
 
   const [roomID, setRoomID] = React.useState("");
-  // const [roomCapacity, setRoomCapacity] = React.useState(1);
 
   const [importModalOpen, setImportModalOpen] = React.useState(false);
-  const [activityAllowedTimeSlot, setActivityAllowedTimeSlot] = React.useState([
-    ["1", "9"],
-    ["1", "10"],
-    ["1", "11"],
-    ["1", "12"],
-    ["1", "13"],
-    ["1", "14"],
-    ["1", "15"],
-    ["1", "16"],
-    ["2", "9"],
-    ["2", "10"],
-    ["2", "11"],
-    ["2", "12"],
-    ["2", "13"],
-    ["2", "14"],
-    ["2", "15"],
-    ["2", "16"],
-    ["3", "9"],
-    ["3", "10"],
-    ["3", "11"],
-    ["3", "12"],
-    ["3", "13"],
-    ["3", "14"],
-    ["3", "15"],
-    ["3", "16"],
-    ["4", "9"],
-    ["4", "10"],
-    ["4", "11"],
-    ["4", "12"],
-    ["4", "13"],
-    ["4", "14"],
-    ["4", "15"],
-    ["4", "16"],
-    ["5", "9"],
-    ["5", "10"],
-    ["5", "11"],
-    ["5", "12"],
-    ["5", "13"],
-    ["5", "14"],
-    ["5", "15"],
-    ["5", "16"],
-  ]);
+  const [activityAllowedTimeSlot, setActivityAllowedTimeSlot] = React.useState(allowed_timeslot);
 
   const [activityPreferredTimeSlot, setActivityPreferredTimeSlot] =
     React.useState([]);
 
-  const [activityTimeSlotStatus, setActivityTimeSlotStatus] = React.useState({
-    1: {
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      // '17': 0,
-      // '18': 0
-    },
-    2: {
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      // '17': 1,
-      // '18': 0
-    },
-    3: {
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      // '17': 1,
-      // '18': 0
-    },
-    4: {
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      // '17': 1,
-      // '18': 0
-    },
-    5: {
-      9: 1,
-      10: 1,
-      11: 1,
-      12: 1,
-      13: 1,
-      14: 1,
-      15: 1,
-      16: 1,
-      // '17': 1,
-      // '18': 0
-    },
-  });
+  const [activityTimeSlotStatus, setActivityTimeSlotStatus] = React.useState(timeslot_status);
 
   const [columnHandlerIndex, setColumnHandlerIndex] = React.useState({
     1: 1,
@@ -469,9 +337,6 @@ const GeneratePage = () => {
   };
 
   const timeSlotHandler = (day, time) => {
-    // console.log(activityTimeSlotStatus)
-    // console.log(activityAllowedTimeSlot)
-    // console.log(activityPreferredTimeSlot)
     let newTimeSlotStatus = activityTimeSlotStatus;
     let newAllowedTimeSlot = [];
     let newPreferredTimeSlot = [];
@@ -703,31 +568,6 @@ const GeneratePage = () => {
     setActivityAllowedRooms(activityAllowedRooms);
   };
 
-  const parseUserInputToSolverData = () => {
-    setModuleMapperHelper(userInput);
-    setActivityTimeHelper(userInput);
-    setLecturerMapperHelper(userInput);
-    setRoomMapperHelper(userInput);
-    setAssignedMapperHelper(userInput);
-
-    let data = {
-      nb_activities: Object.keys(moduleMapper).length,
-      nb_lecturers: Object.keys(lecturerMapper).length,
-      nb_rooms: Object.keys(roomMapper).length,
-      activity_allowed_times: activityAllowedTime,
-      activity_preferred_times: activityPreferredTime,
-      lecturer_allowed_times: lecturerAllowedTime,
-      lecturer_preferred_times: lecturerPreferredTime,
-      activity_allowed_rooms: activityAllowedLecturers,
-      room_allowed_times: roomAllowedTime,
-      room_preferred_times: roomPreferredTime,
-      activity_allowed_lecturers: activityAllowedRooms,
-      activities_on_seperate_days: [],
-    };
-
-    // console.log(data)
-  };
-
   const exportJson = () => {
     // console.log((localStorage.getItem('userInfo')))
     const element = document.createElement("a");
@@ -849,111 +689,9 @@ const GeneratePage = () => {
 
           setActivityPerWeek(1);
 
-          setActivityAllowedTimeSlot([
-            ["1", "9"],
-            ["1", "10"],
-            ["1", "11"],
-            ["1", "12"],
-            ["1", "13"],
-            ["1", "14"],
-            ["1", "15"],
-            ["1", "16"],
-            ["2", "9"],
-            ["2", "10"],
-            ["2", "11"],
-            ["2", "12"],
-            ["2", "13"],
-            ["2", "14"],
-            ["2", "15"],
-            ["2", "16"],
-            ["3", "9"],
-            ["3", "10"],
-            ["3", "11"],
-            ["3", "12"],
-            ["3", "13"],
-            ["3", "14"],
-            ["3", "15"],
-            ["3", "16"],
-            ["4", "9"],
-            ["4", "10"],
-            ["4", "11"],
-            ["4", "12"],
-            ["4", "13"],
-            ["4", "14"],
-            ["4", "15"],
-            ["4", "16"],
-            ["5", "9"],
-            ["5", "10"],
-            ["5", "11"],
-            ["5", "12"],
-            ["5", "13"],
-            ["5", "14"],
-            ["5", "15"],
-            ["5", "16"],
-          ]);
+          setActivityAllowedTimeSlot(allowed_timeslot);
           setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus({
-            1: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            2: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            3: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            4: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            5: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-          });
+          setActivityTimeSlotStatus(timeslot_status);
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           setActivityTimeHelper(userInfo);
@@ -987,111 +725,9 @@ const GeneratePage = () => {
           setUserInput(userInfo);
 
           setLecturerName("");
-          setActivityAllowedTimeSlot([
-            ["1", "9"],
-            ["1", "10"],
-            ["1", "11"],
-            ["1", "12"],
-            ["1", "13"],
-            ["1", "14"],
-            ["1", "15"],
-            ["1", "16"],
-            ["2", "9"],
-            ["2", "10"],
-            ["2", "11"],
-            ["2", "12"],
-            ["2", "13"],
-            ["2", "14"],
-            ["2", "15"],
-            ["2", "16"],
-            ["3", "9"],
-            ["3", "10"],
-            ["3", "11"],
-            ["3", "12"],
-            ["3", "13"],
-            ["3", "14"],
-            ["3", "15"],
-            ["3", "16"],
-            ["4", "9"],
-            ["4", "10"],
-            ["4", "11"],
-            ["4", "12"],
-            ["4", "13"],
-            ["4", "14"],
-            ["4", "15"],
-            ["4", "16"],
-            ["5", "9"],
-            ["5", "10"],
-            ["5", "11"],
-            ["5", "12"],
-            ["5", "13"],
-            ["5", "14"],
-            ["5", "15"],
-            ["5", "16"],
-          ]);
+          setActivityAllowedTimeSlot(allowed_timeslot);
           setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus({
-            1: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            2: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            3: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            4: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            5: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-          });
+          setActivityTimeSlotStatus(timeslot_status);
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           setLecturerMapperHelper(userInfo);
@@ -1121,111 +757,9 @@ const GeneratePage = () => {
           };
 
           setRoomID("");
-          setActivityAllowedTimeSlot([
-            ["1", "9"],
-            ["1", "10"],
-            ["1", "11"],
-            ["1", "12"],
-            ["1", "13"],
-            ["1", "14"],
-            ["1", "15"],
-            ["1", "16"],
-            ["2", "9"],
-            ["2", "10"],
-            ["2", "11"],
-            ["2", "12"],
-            ["2", "13"],
-            ["2", "14"],
-            ["2", "15"],
-            ["2", "16"],
-            ["3", "9"],
-            ["3", "10"],
-            ["3", "11"],
-            ["3", "12"],
-            ["3", "13"],
-            ["3", "14"],
-            ["3", "15"],
-            ["3", "16"],
-            ["4", "9"],
-            ["4", "10"],
-            ["4", "11"],
-            ["4", "12"],
-            ["4", "13"],
-            ["4", "14"],
-            ["4", "15"],
-            ["4", "16"],
-            ["5", "9"],
-            ["5", "10"],
-            ["5", "11"],
-            ["5", "12"],
-            ["5", "13"],
-            ["5", "14"],
-            ["5", "15"],
-            ["5", "16"],
-          ]);
+          setActivityAllowedTimeSlot(allowed_timeslot);
           setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus({
-            1: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            2: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            3: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            4: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-            5: {
-              9: 1,
-              10: 1,
-              11: 1,
-              12: 1,
-              13: 1,
-              14: 1,
-              15: 1,
-              16: 1,
-              // '17': 1,
-              // '18': 0
-            },
-          });
+          setActivityTimeSlotStatus(timeslot_status);
 
           setUserInput(userInfo);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -2489,46 +2023,6 @@ const GeneratePage = () => {
               <DoneAll />
             )}
           </Button>
-
-          {/* <div className={styles.timeHeader}>
-                        <Button color='gray' onClick={() => timeSlotRowHandler(17)} className={styles.timeHeaderValue}>17.00</Button>
-                    </div>
-                    <div className={styles.borderLine} />
-                    <Button
-                        onClick={() => timeSlotHandler(1, 17)}
-                        variant={activityTimeSlotStatus[1][17] === 0 ? '' : "contained"}
-                        color={activityTimeSlotStatus[1][17] === 0 ? 'white' : (activityTimeSlotStatus[1][17] === 1 ? 'allowed' : 'preferred')}
-                        className={styles.timeSlotCell}>
-                        {activityTimeSlotStatus[1][17] === 0 ? <Close /> : (activityTimeSlotStatus[1][17] === 1 ? <Done /> : <DoneAll />)}
-                    </Button>
-                    <Button
-                        onClick={() => timeSlotHandler(2, 17)}
-                        variant={activityTimeSlotStatus[2][17] === 0 ? '' : "contained"}
-                        color={activityTimeSlotStatus[2][17] === 0 ? 'white' : (activityTimeSlotStatus[2][17] === 1 ? 'allowed' : 'preferred')}
-                        className={styles.timeSlotCell}>
-                        {activityTimeSlotStatus[2][17] === 0 ? <Close /> : (activityTimeSlotStatus[2][17] === 1 ? <Done /> : <DoneAll />)}
-                    </Button>
-                    <Button
-                        onClick={() => timeSlotHandler(3, 17)}
-                        variant={activityTimeSlotStatus[3][17] === 0 ? '' : "contained"}
-                        color={activityTimeSlotStatus[3][17] === 0 ? 'white' : (activityTimeSlotStatus[3][17] === 1 ? 'allowed' : 'preferred')}
-                        className={styles.timeSlotCell}>
-                        {activityTimeSlotStatus[3][17] === 0 ? <Close /> : (activityTimeSlotStatus[3][17] === 1 ? <Done /> : <DoneAll />)}
-                    </Button>
-                    <Button
-                        onClick={() => timeSlotHandler(4, 17)}
-                        variant={activityTimeSlotStatus[4][17] === 0 ? '' : "contained"}
-                        color={activityTimeSlotStatus[4][17] === 0 ? 'white' : (activityTimeSlotStatus[4][17] === 1 ? 'allowed' : 'preferred')}
-                        className={styles.timeSlotCell}>
-                        {activityTimeSlotStatus[4][17] === 0 ? <Close /> : (activityTimeSlotStatus[4][17] === 1 ? <Done /> : <DoneAll />)}
-                    </Button>
-                    <Button
-                        onClick={() => timeSlotHandler(5, 17)}
-                        variant={activityTimeSlotStatus[5][17] === 0 ? '' : "contained"}
-                        color={activityTimeSlotStatus[5][17] === 0 ? 'white' : (activityTimeSlotStatus[5][17] === 1 ? 'allowed' : 'preferred')}
-                        className={activityTimeSlotStatus[1][9] === 0 ? styles.timeSlotLastCellNone : styles.timeSlotLastCell}>
-                        {activityTimeSlotStatus[5][17] === 0 ? <Close /> : (activityTimeSlotStatus[5][17] === 1 ? <Done /> : <DoneAll />)}
-                    </Button> */}
         </div>
       </ThemeProvider>
     );
@@ -3015,111 +2509,9 @@ const GeneratePage = () => {
       case "room":
         setLecturerName("");
         setRoomID("");
-        setActivityAllowedTimeSlot([
-          ["1", "9"],
-          ["1", "10"],
-          ["1", "11"],
-          ["1", "12"],
-          ["1", "13"],
-          ["1", "14"],
-          ["1", "15"],
-          ["1", "16"],
-          ["2", "9"],
-          ["2", "10"],
-          ["2", "11"],
-          ["2", "12"],
-          ["2", "13"],
-          ["2", "14"],
-          ["2", "15"],
-          ["2", "16"],
-          ["3", "9"],
-          ["3", "10"],
-          ["3", "11"],
-          ["3", "12"],
-          ["3", "13"],
-          ["3", "14"],
-          ["3", "15"],
-          ["3", "16"],
-          ["4", "9"],
-          ["4", "10"],
-          ["4", "11"],
-          ["4", "12"],
-          ["4", "13"],
-          ["4", "14"],
-          ["4", "15"],
-          ["4", "16"],
-          ["5", "9"],
-          ["5", "10"],
-          ["5", "11"],
-          ["5", "12"],
-          ["5", "13"],
-          ["5", "14"],
-          ["5", "15"],
-          ["5", "16"],
-        ]);
+        setActivityAllowedTimeSlot(allowed_timeslot);
         setActivityPreferredTimeSlot([]);
-        setActivityTimeSlotStatus({
-          1: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          2: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          3: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          4: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-          5: {
-            9: 1,
-            10: 1,
-            11: 1,
-            12: 1,
-            13: 1,
-            14: 1,
-            15: 1,
-            16: 1,
-            // '17': 1,
-            // '18': 0
-          },
-        });
+        setActivityTimeSlotStatus(timeslot_status);
         setRowHandlerIndex({
           9: 1,
           10: 1,
@@ -3182,9 +2574,6 @@ const GeneratePage = () => {
         setAssignedMapperHelper(userInfo);
       }
     }
-    // return () => {
-    //     // Anything in here is fired on component unmount.
-    // }
   }, []);
 
   return (
@@ -3340,14 +2729,6 @@ const GeneratePage = () => {
               >
                 Close
               </Button>
-              {/* <Button
-                                color="gray"
-                                className={styles.addButton}
-                                variant="contained"
-                                onClick={() => addNewActivity(activityName)}
-                            >
-                                Add
-                            </Button> */}
             </ThemeProvider>
           </div>
         </div>
