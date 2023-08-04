@@ -1,3 +1,4 @@
+// initial value for activityTimeSlotStatus
 export const timeslot_status = {
     1: {
       9: 1,

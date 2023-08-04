@@ -1,7 +1,7 @@
-import * as React from "react";
+import { useState, useEffect, useRef } from "react";
 
-import FileUpload from "@mui/icons-material/FileUpload";
-import Check from "@mui/icons-material/Check";
+import FileUpload         from "@mui/icons-material/FileUpload";
+import Check              from "@mui/icons-material/Check";
 
 import {
   Autocomplete,
@@ -14,38 +14,43 @@ import {
   List,
   Modal,
   Button,
-  Tooltip,
   Chip,
 } from "@mui/material";
+
+import TimeslotSelector,{ map_timeslot }     
+                            from "../components/GeneratePage/TimeslotSelector";
+import { AddModuleButton,ResetButton, ImportButton, ExportButton } 
+                            from "../components/GeneratePage/Button";
 
 import { theme }            from "../utils/theme";
 import { allowed_timeslot } from "../utils/allowed_timeslot";
 import { timeslot_status }  from "../utils/timeslot_status";
+import { column_index, row_index } 
+                            from "../utils/timetable_index";
 
-import styles from "../assets/pages/GeneratePage.module.css";
-import { Done, DoneAll, Info, Close } from "@mui/icons-material";
+import styles               from "../assets/pages/GeneratePage.module.css";
 
 /**
  * View for Generate Page .../generate
  * @returns Generate Page
  */
 const GeneratePage = () => {
-  const [tab, setTab] = React.useState("module");
-  const [activityModule, setActivityModule] = React.useState("");
-  const [activityActivities, setActivityActivities] = React.useState([]);
-  const [activityActivity, setActivityActivity] = React.useState("");
+  const [tab               , setTab]                = useState("module");
+  const [activityModule    , setActivityModule]     = useState("");
+  const [activityActivities, setActivityActivities] = useState([]);
+  const [activityActivity  , setActivityActivity]   = useState("");
 
-  const [open, setOpen] = React.useState(false);
-  const [activities, setActivities] = React.useState([
+  const [open              , setOpen]               = useState(false);
+  const [activities        , setActivities]         = useState([
     "Lecture",
     "Exercise",
     "Lab Session",
     "Workshop",
     "Experiment",
   ]);
-  const [activityName, setActivityName] = React.useState("");
-  const [checked, setChecked] = React.useState([]);
-  const [userInput, setUserInput] = React.useState({
+  const [activityName     , setActivityName]        = useState("");
+  const [checked          , setChecked]             = useState([]);
+  const [userInput        , setUserInput]           = useState({
     umodules: {},
     activities: {},
     lecturers: {},
@@ -55,67 +60,40 @@ const GeneratePage = () => {
       rooms: {},
     },
   });
-  const [userInputActivity, setUserInputActivity] = React.useState({
+  const [userInputActivity, setUserInputActivity] = useState({
     activityModule: "",
     activity: "",
     allowed: [],
     preferred: [],
   });
-  const [umodule, setUModule] = React.useState({
+  const [umodule          , setUModule]          = useState({
     id: "",
     activities: [],
   });
-  const [moduleID, setModuleID] = React.useState("");
-  const [modules, setModules] = React.useState([]);
+  const [moduleID         , setModuleID]         = useState("");
+  const [modules          , setModules]          = useState([]);
 
-  const [activityPerWeek, setActivityPerWeek] = React.useState(1);
-  const [lecturerName, setLecturerName] = React.useState("");
+  const [activityPerWeek  , setActivityPerWeek]  = useState(1);
+  const [lecturerName     , setLecturerName]     = useState("");
 
-  const [roomID, setRoomID] = React.useState("");
+  const [roomID           , setRoomID]           = useState("");
 
-  const [importModalOpen, setImportModalOpen] = React.useState(false);
-  const [activityAllowedTimeSlot, setActivityAllowedTimeSlot] = React.useState(allowed_timeslot);
+  const [importModalOpen  , setImportModalOpen]   = useState(false);
 
-  const [activityPreferredTimeSlot, setActivityPreferredTimeSlot] =
-    React.useState([]);
+  const [activityAllowedTimeSlot  , setActivityAllowedTimeSlot]   = useState(allowed_timeslot);
+  const [activityPreferredTimeSlot, setActivityPreferredTimeSlot] = useState([]);
+  const [activityTimeSlotStatus   , setActivityTimeSlotStatus]    = useState(timeslot_status);
 
-  const [activityTimeSlotStatus, setActivityTimeSlotStatus] = React.useState(timeslot_status);
+  const [columnHandlerIndex       , setColumnHandlerIndex]        = useState(column_index);
+  const [rowHandlerIndex          , setRowHandlerIndex]           = useState(row_index);
 
-  const [columnHandlerIndex, setColumnHandlerIndex] = React.useState({
-    1: 1,
-    2: 1,
-    3: 1,
-    4: 1,
-    5: 1,
-  });
-  const [rowHandlerIndex, setRowHandlerIndex] = React.useState({
-    9: 1,
-    10: 1,
-    11: 1,
-    12: 1,
-    13: 1,
-    14: 1,
-    15: 1,
-    16: 1,
-  });
-
-  const [moduleMapper, setModuleMapper] = React.useState({});
-  const [lecturerMapper, setLecturerMapper] = React.useState({});
-  const [roomMapper, setRoomMapper] = React.useState({});
-  const [activityAllowedTime, setActivityAllowedTime] = React.useState({});
-  const [activityPreferredTime, setActivityPreferredTime] = React.useState({});
-  const [lecturerAllowedTime, setLecturerAllowedTime] = React.useState({});
-  const [lecturerPreferredTime, setLecturerPreferredTime] = React.useState({});
-  const [roomAllowedTime, setRoomAllowedTime] = React.useState({});
-  const [roomPreferredTime, setRoomPreferredTime] = React.useState({});
-  const [lecturerActivityAssign, setLecturerActivityAssign] =
-    React.useState("");
-  const [lecturerAssign, setLecturerAssign] = React.useState([]);
-  const [roomActivityAssign, setRoomActivityAssign] = React.useState("");
-  const [roomAssign, setRoomAssign] = React.useState([]);
-  const [activityAllowedLecturers, setActivityAllowedLecturers] =
-    React.useState({});
-  const [activityAllowedRooms, setActivityAllowedRooms] = React.useState({});
+  const [moduleMapper             , setModuleMapper]              = useState({});
+  const [lecturerMapper           , setLecturerMapper]            = useState({});
+  const [roomMapper               , setRoomMapper]                = useState({});
+  const [lecturerActivityAssign   , setLecturerActivityAssign]    = useState("");
+  const [lecturerAssign           , setLecturerAssign]            = useState([]);
+  const [roomActivityAssign       , setRoomActivityAssign]        = useState("");
+  const [roomAssign               , setRoomAssign]                = useState([]);
 
   // Set module id in activity tab
   const activityModuleHandler = (value) => {
@@ -137,15 +115,15 @@ const GeneratePage = () => {
   };
 
   // STATE: open handler
-  const handleOpen = () => setOpen(true);
+  const handleOpen  = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const importModalHandleOpen = () => setImportModalOpen(true);
+  const importModalHandleOpen  = () => setImportModalOpen(true);
   const importModalHandleClose = () => setImportModalOpen(false);
 
-  const [dragActive, setDragActive] = React.useState(false);
-  const [importFile, setImportFile] = React.useState();
-  const inputRef = React.useRef(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [importFile, setImportFile] = useState();
+  const inputRef                    = useRef(null);
 
   // STATE: activityName handler
   const activityNameHandler = (event) => {
@@ -191,9 +169,7 @@ const GeneratePage = () => {
   };
 
   const timeSlotRowHandler = (time) => {
-    let newTimeSlotStatus = activityTimeSlotStatus;
-    let newAllowedTimeSlot = [];
-    let newPreferredTimeSlot = [];
+    let newTimeSlotStatus = JSON.parse(JSON.stringify(activityTimeSlotStatus));
 
     Object.keys(newTimeSlotStatus).forEach((day) => {
       day = parseInt(day);
@@ -243,20 +219,7 @@ const GeneratePage = () => {
       }
     });
 
-    Object.keys(newTimeSlotStatus).forEach((day) => {
-      Object.keys(newTimeSlotStatus[day]).forEach((time) => {
-        switch (newTimeSlotStatus[day][time]) {
-          case 1:
-            newAllowedTimeSlot = [...newAllowedTimeSlot, [day, time]];
-            break;
-          case 2:
-            newPreferredTimeSlot = [...newPreferredTimeSlot, [day, time]];
-            break;
-          default:
-            break;
-        }
-      });
-    });
+    const { newAllowedTimeSlot, newPreferredTimeSlot } = map_timeslot(newTimeSlotStatus);
 
     setActivityTimeSlotStatus(newTimeSlotStatus);
     setActivityAllowedTimeSlot(newAllowedTimeSlot);
@@ -264,9 +227,7 @@ const GeneratePage = () => {
   };
 
   const timeSlotColumnHandler = (day) => {
-    let newTimeSlotStatus = activityTimeSlotStatus;
-    let newAllowedTimeSlot = [];
-    let newPreferredTimeSlot = [];
+    let newTimeSlotStatus = JSON.parse(JSON.stringify(activityTimeSlotStatus));
 
     Object.keys(newTimeSlotStatus[day]).forEach((time) => {
       time = parseInt(time);
@@ -316,20 +277,7 @@ const GeneratePage = () => {
       }
     });
 
-    Object.keys(newTimeSlotStatus).forEach((day) => {
-      Object.keys(newTimeSlotStatus[day]).forEach((time) => {
-        switch (newTimeSlotStatus[day][time]) {
-          case 1:
-            newAllowedTimeSlot = [...newAllowedTimeSlot, [day, time]];
-            break;
-          case 2:
-            newPreferredTimeSlot = [...newPreferredTimeSlot, [day, time]];
-            break;
-          default:
-            break;
-        }
-      });
-    });
+    const { newAllowedTimeSlot, newPreferredTimeSlot } = map_timeslot(newTimeSlotStatus);
 
     setActivityTimeSlotStatus(newTimeSlotStatus);
     setActivityAllowedTimeSlot(newAllowedTimeSlot);
@@ -337,9 +285,7 @@ const GeneratePage = () => {
   };
 
   const timeSlotHandler = (day, time) => {
-    let newTimeSlotStatus = activityTimeSlotStatus;
-    let newAllowedTimeSlot = [];
-    let newPreferredTimeSlot = [];
+    let newTimeSlotStatus = JSON.parse(JSON.stringify(activityTimeSlotStatus));
 
     switch (newTimeSlotStatus[day][time]) {
       case 0:
@@ -353,20 +299,7 @@ const GeneratePage = () => {
         break;
     }
 
-    Object.keys(newTimeSlotStatus).forEach((day) => {
-      Object.keys(newTimeSlotStatus[day]).forEach((time) => {
-        switch (newTimeSlotStatus[day][time]) {
-          case 1:
-            newAllowedTimeSlot = [...newAllowedTimeSlot, [day, time]];
-            break;
-          case 2:
-            newPreferredTimeSlot = [...newPreferredTimeSlot, [day, time]];
-            break;
-          default:
-            break;
-        }
-      });
-    });
+    const { newAllowedTimeSlot, newPreferredTimeSlot } = map_timeslot(newTimeSlotStatus);
 
     setActivityTimeSlotStatus(newTimeSlotStatus);
     setActivityAllowedTimeSlot(newAllowedTimeSlot);
@@ -400,94 +333,33 @@ const GeneratePage = () => {
           };
         });
       });
-
-    let activityAllowedTime = {};
-    let activityPreferredTime = {};
-
-    Object.keys(userInput.activities).forEach((id) => {
-      Object.keys(userInput.activities[id]).forEach((activity) => {
-        if (userInput.activities[id][activity].allowed.length !== 0)
-          activityAllowedTime = {
-            ...activityAllowedTime,
-            [Object.keys(newModuleMapper).find(
-              (key) => newModuleMapper[key] === id + "." + activity
-            )]: userInput.activities[id][activity].allowed,
-          };
-
-        if (userInput.activities[id][activity].preferred.length !== 0)
-          activityPreferredTime = {
-            ...activityPreferredTime,
-            [Object.keys(newModuleMapper).find(
-              (key) => newModuleMapper[key] === id + "." + activity
-            )]: userInput.activities[id][activity].preferred,
-          };
-      });
-    });
-
-    setActivityAllowedTime(activityAllowedTime);
-    setActivityPreferredTime(activityPreferredTime);
   };
 
   const setLecturerMapperHelper = (userInput) => {
     let lecturerMapper = {};
-
-    let lecturerAllowedTime = {};
-    let lecturerPreferredTime = {};
 
     Object.keys(userInput.lecturers).forEach((name) => {
       lecturerMapper = {
         ...lecturerMapper,
         [Object.keys(lecturerMapper).length + 1]: name,
       };
-
-      if (userInput.lecturers[name].allowed.length !== 0)
-        lecturerAllowedTime = {
-          ...lecturerAllowedTime,
-          [Object.keys(lecturerMapper).length]:
-            userInput.lecturers[name].allowed,
-        };
-
-      if (userInput.lecturers[name].preferred.length !== 0)
-        lecturerPreferredTime = {
-          ...lecturerPreferredTime,
-          [Object.keys(lecturerMapper).length]:
-            userInput.lecturers[name].preferred,
-        };
     });
 
     setLecturerMapper(lecturerMapper);
-    setLecturerAllowedTime(lecturerAllowedTime);
-    setLecturerPreferredTime(lecturerPreferredTime);
+
   };
 
   const setRoomMapperHelper = (userInput) => {
     let roomMapper = {};
-
-    let roomAllowedTime = {};
-    let roomPreferredTime = {};
 
     Object.keys(userInput.rooms).forEach((name) => {
       roomMapper = {
         ...roomMapper,
         [Object.keys(roomMapper).length + 1]: name,
       };
-
-      if (userInput.rooms[name].allowed.length !== 0)
-        roomAllowedTime = {
-          ...roomAllowedTime,
-          [Object.keys(roomMapper).length]: userInput.rooms[name].allowed,
-        };
-
-      if (userInput.rooms[name].preferred.length !== 0)
-        roomPreferredTime = {
-          ...roomPreferredTime,
-          [Object.keys(roomMapper).length]: userInput.rooms[name].preferred,
-        };
     });
 
     setRoomMapper(roomMapper);
-    setRoomAllowedTime(roomAllowedTime);
-    setRoomPreferredTime(roomPreferredTime);
   };
 
   const setAssignedMapperHelper = (userInput) => {
@@ -521,51 +393,6 @@ const GeneratePage = () => {
         };
       });
     }
-
-    let activityAllowedLecturers = {};
-
-    Object.keys(userInput.assigned.lecturers).forEach((id) => {
-      let lecturerActivityNumber = Object.keys(newModuleMapper).find(
-        (key) => newModuleMapper[key] === id
-      );
-
-      let assignedLecutrer = [];
-
-      Object.keys(newLecturerMapper).forEach((key) => {
-        if (userInput.assigned.lecturers[id].includes(newLecturerMapper[key])) {
-          assignedLecutrer = [...assignedLecutrer, key];
-        }
-      });
-
-      activityAllowedLecturers = {
-        ...activityAllowedLecturers,
-        [lecturerActivityNumber]: assignedLecutrer,
-      };
-    });
-
-    let activityAllowedRooms = {};
-
-    Object.keys(userInput.assigned.rooms).forEach((id) => {
-      let roomActivityNumber = Object.keys(newModuleMapper).find(
-        (key) => newModuleMapper[key] === id
-      );
-
-      let assignedRoom = [];
-
-      Object.keys(newRoomMapper).forEach((key) => {
-        if (userInput.assigned.rooms[id].includes(newRoomMapper[key])) {
-          assignedRoom = [...assignedRoom, key];
-        }
-      });
-
-      activityAllowedRooms = {
-        ...activityAllowedRooms,
-        [roomActivityNumber]: assignedRoom,
-      };
-    });
-
-    setActivityAllowedLecturers(activityAllowedLecturers);
-    setActivityAllowedRooms(activityAllowedRooms);
   };
 
   const exportJson = () => {
@@ -688,10 +515,7 @@ const GeneratePage = () => {
           setActivityActivity("");
 
           setActivityPerWeek(1);
-
-          setActivityAllowedTimeSlot(allowed_timeslot);
-          setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus(timeslot_status);
+          resetTimeSelector()
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           setActivityTimeHelper(userInfo);
@@ -725,9 +549,7 @@ const GeneratePage = () => {
           setUserInput(userInfo);
 
           setLecturerName("");
-          setActivityAllowedTimeSlot(allowed_timeslot);
-          setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus(timeslot_status);
+          resetTimeSelector()
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           setLecturerMapperHelper(userInfo);
@@ -757,9 +579,7 @@ const GeneratePage = () => {
           };
 
           setRoomID("");
-          setActivityAllowedTimeSlot(allowed_timeslot);
-          setActivityPreferredTimeSlot([]);
-          setActivityTimeSlotStatus(timeslot_status);
+          resetTimeSelector()
 
           setUserInput(userInfo);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -846,6 +666,12 @@ const GeneratePage = () => {
     }
   };
 
+  const resetTimeSelector = () => {
+    setActivityAllowedTimeSlot(allowed_timeslot);
+    setActivityPreferredTimeSlot([]);
+    setActivityTimeSlotStatus(timeslot_status);
+  }
+
   const inputDragHandler = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -914,1118 +740,6 @@ const GeneratePage = () => {
     if (event.target.files[0]) {
       setImportFile(event.target.files[0]);
     }
-  };
-
-  const timeSlotRender = () => {
-    return (
-      <ThemeProvider theme={theme}>
-        <div className={styles.timeSlot}>
-          <div className={styles.helper}>
-            <div className={styles.helperWrapper}>
-              <div className={styles.allowed} />
-              <div className={styles.helperText}>Allowed Time Slot</div>
-              <Tooltip
-                title={
-                  "Allowed timeslot is the number of hours during which classes are available. Preferred timeslot is the preferred timeslot. Since the preferred timeslot is more important than the allowed timeslot, there is a high probability that the class will be assigned to the preferred timeslot."
-                }
-              >
-                <Info />
-              </Tooltip>
-            </div>
-            <div className={styles.helperWrapper}>
-              <div className={styles.preferred} />
-              <div className={styles.helperText}>Preferred Time Slot</div>
-              <div />
-            </div>
-          </div>
-          <div></div>
-          <div />
-          <Button
-            onClick={() => timeSlotColumnHandler(1)}
-            color="gray"
-            className={styles.timeSlotHeader}
-          >
-            Monday
-          </Button>
-          <Button
-            onClick={() => timeSlotColumnHandler(2)}
-            color="gray"
-            className={styles.timeSlotHeader}
-          >
-            Tuesday
-          </Button>
-          <Button
-            onClick={() => timeSlotColumnHandler(3)}
-            color="gray"
-            className={styles.timeSlotHeader}
-          >
-            Wednesday
-          </Button>
-          <Button
-            onClick={() => timeSlotColumnHandler(4)}
-            color="gray"
-            className={styles.timeSlotHeader}
-          >
-            Thursday
-          </Button>
-          <Button
-            onClick={() => timeSlotColumnHandler(5)}
-            color="gray"
-            className={styles.timeSlotHeader}
-          >
-            Friday
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(9)}
-              className={styles.timeHeaderValue}
-            >
-              9.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 9)}
-            variant={activityTimeSlotStatus[1][9] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][9] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][9] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][9] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][9] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][9] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 9)}
-            variant={activityTimeSlotStatus[2][9] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][9] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][9] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][9] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][9] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][9] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 9)}
-            variant={activityTimeSlotStatus[3][9] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][9] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][9] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][9] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][9] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][9] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 9)}
-            variant={activityTimeSlotStatus[4][9] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][9] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][9] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][9] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][9] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][9] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 9)}
-            variant={activityTimeSlotStatus[5][9] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][9] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][9] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][9] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][9] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][9] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(10)}
-              className={styles.timeHeaderValue}
-            >
-              10.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 10)}
-            variant={activityTimeSlotStatus[1][10] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][10] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][10] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][10] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][10] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][10] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 10)}
-            variant={activityTimeSlotStatus[2][10] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][10] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][10] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][10] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][10] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][10] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 10)}
-            variant={activityTimeSlotStatus[3][10] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][10] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][10] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][10] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][10] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][10] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 10)}
-            variant={activityTimeSlotStatus[4][10] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][10] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][10] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][10] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][10] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][10] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 10)}
-            variant={activityTimeSlotStatus[5][10] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][10] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][10] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][10] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][10] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][10] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(11)}
-              className={styles.timeHeaderValue}
-            >
-              11.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 11)}
-            variant={activityTimeSlotStatus[1][11] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][11] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][11] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][11] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][11] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][11] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 11)}
-            variant={activityTimeSlotStatus[2][11] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][11] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][11] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][11] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][11] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][11] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 11)}
-            variant={activityTimeSlotStatus[3][11] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][11] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][11] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][11] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][11] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][11] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 11)}
-            variant={activityTimeSlotStatus[4][11] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][11] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][11] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][11] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][11] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][11] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 11)}
-            variant={activityTimeSlotStatus[5][11] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][11] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][11] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][11] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][11] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][11] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(12)}
-              className={styles.timeHeaderValue}
-            >
-              12.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 12)}
-            variant={activityTimeSlotStatus[1][12] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][12] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][12] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][12] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][12] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][12] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 12)}
-            variant={activityTimeSlotStatus[2][12] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][12] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][12] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][12] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][12] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][12] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 12)}
-            variant={activityTimeSlotStatus[3][12] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][12] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][12] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][12] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][12] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][12] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 12)}
-            variant={activityTimeSlotStatus[4][12] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][12] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][12] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][12] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][12] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][12] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 12)}
-            variant={activityTimeSlotStatus[5][12] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][12] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][12] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][12] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][12] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][12] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(13)}
-              className={styles.timeHeaderValue}
-            >
-              13.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 13)}
-            variant={activityTimeSlotStatus[1][13] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][13] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][13] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][13] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][13] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][13] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 13)}
-            variant={activityTimeSlotStatus[2][13] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][13] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][13] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][13] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][13] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][13] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 13)}
-            variant={activityTimeSlotStatus[3][13] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][13] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][13] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][13] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][13] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][13] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 13)}
-            variant={activityTimeSlotStatus[4][13] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][13] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][13] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][13] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][13] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][13] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 13)}
-            variant={activityTimeSlotStatus[5][13] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][13] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][13] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][13] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][13] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][13] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(14)}
-              className={styles.timeHeaderValue}
-            >
-              14.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 14)}
-            variant={activityTimeSlotStatus[1][14] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][14] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][14] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][14] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][14] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][14] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 14)}
-            variant={activityTimeSlotStatus[2][14] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][14] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][14] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][14] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][14] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][14] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 14)}
-            variant={activityTimeSlotStatus[3][14] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][14] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][14] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][14] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][14] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][14] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 14)}
-            variant={activityTimeSlotStatus[4][14] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][14] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][14] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][14] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][14] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][14] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 14)}
-            variant={activityTimeSlotStatus[5][14] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][14] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][14] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][14] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][14] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][14] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(15)}
-              className={styles.timeHeaderValue}
-            >
-              15.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 15)}
-            variant={activityTimeSlotStatus[1][15] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][15] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][15] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][15] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][15] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][15] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 15)}
-            variant={activityTimeSlotStatus[2][15] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][15] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][15] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][15] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][15] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][15] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 15)}
-            variant={activityTimeSlotStatus[3][15] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][15] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][15] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][15] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][15] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][15] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 15)}
-            variant={activityTimeSlotStatus[4][15] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][15] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][15] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][15] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][15] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][15] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 15)}
-            variant={activityTimeSlotStatus[5][15] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][15] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][15] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][15] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][15] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][15] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-
-          <div className={styles.timeHeader}>
-            <Button
-              color="gray"
-              onClick={() => timeSlotRowHandler(16)}
-              className={styles.timeHeaderValue}
-            >
-              16.00
-            </Button>
-          </div>
-          <div className={styles.borderLine} />
-          <Button
-            onClick={() => timeSlotHandler(1, 16)}
-            variant={activityTimeSlotStatus[1][16] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[1][16] === 0
-                ? "white"
-                : activityTimeSlotStatus[1][16] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[1][16] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[1][16] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[1][16] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(2, 16)}
-            variant={activityTimeSlotStatus[2][16] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[2][16] === 0
-                ? "white"
-                : activityTimeSlotStatus[2][16] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[2][16] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[2][16] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[2][16] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(3, 16)}
-            variant={activityTimeSlotStatus[3][16] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[3][16] === 0
-                ? "white"
-                : activityTimeSlotStatus[3][16] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[3][16] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[3][16] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[3][16] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(4, 16)}
-            variant={activityTimeSlotStatus[4][16] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[4][16] === 0
-                ? "white"
-                : activityTimeSlotStatus[4][16] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[4][16] === 0
-                ? styles.timeSlotCellNone
-                : styles.timeSlotCell
-            }
-          >
-            {activityTimeSlotStatus[4][16] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[4][16] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-          <Button
-            onClick={() => timeSlotHandler(5, 16)}
-            variant={activityTimeSlotStatus[5][16] === 0 ? "" : "contained"}
-            color={
-              activityTimeSlotStatus[5][16] === 0
-                ? "white"
-                : activityTimeSlotStatus[5][16] === 1
-                ? "allowed"
-                : "preferred"
-            }
-            className={
-              activityTimeSlotStatus[5][16] === 0
-                ? styles.timeSlotLastCellNone
-                : styles.timeSlotLastCell
-            }
-          >
-            {activityTimeSlotStatus[5][16] === 0 ? (
-              <Close />
-            ) : activityTimeSlotStatus[5][16] === 1 ? (
-              <Done />
-            ) : (
-              <DoneAll />
-            )}
-          </Button>
-        </div>
-      </ThemeProvider>
-    );
   };
 
   // triggers the input when the button is clicked
@@ -2251,7 +965,12 @@ const GeneratePage = () => {
               </ThemeProvider>
             </div>
 
-            {timeSlotRender()}
+            <TimeslotSelector 
+              timeSlotRowHandler={timeSlotRowHandler}
+              timeSlotColumnHandler={timeSlotColumnHandler}
+              timeSlotHandler={timeSlotHandler}
+              activityTimeSlotStatus={activityTimeSlotStatus}
+            />
           </div>
         );
 
@@ -2273,7 +992,12 @@ const GeneratePage = () => {
                 onChange={(event) => setLecturerName(event.target.value)}
               />
             </ThemeProvider>
-            {timeSlotRender()}
+            <TimeslotSelector 
+              timeSlotRowHandler={timeSlotRowHandler}
+              timeSlotColumnHandler={timeSlotColumnHandler}
+              timeSlotHandler={timeSlotHandler}
+              activityTimeSlotStatus={activityTimeSlotStatus}
+            />
           </div>
         );
       case "room":
@@ -2291,7 +1015,12 @@ const GeneratePage = () => {
                 onChange={(event) => setRoomID(event.target.value)}
               />
             </ThemeProvider>
-            {timeSlotRender()}
+            <TimeslotSelector 
+              timeSlotRowHandler={timeSlotRowHandler}
+              timeSlotColumnHandler={timeSlotColumnHandler}
+              timeSlotHandler={timeSlotHandler}
+              activityTimeSlotStatus={activityTimeSlotStatus}
+            />
           </div>
         );
       case "assignL":
@@ -2495,32 +1224,14 @@ const GeneratePage = () => {
       case "room":
         setLecturerName("");
         setRoomID("");
-        setActivityAllowedTimeSlot(allowed_timeslot);
-        setActivityPreferredTimeSlot([]);
-        setActivityTimeSlotStatus(timeslot_status);
-        setRowHandlerIndex({
-          9: 1,
-          10: 1,
-          11: 1,
-          12: 1,
-          13: 1,
-          14: 1,
-          15: 1,
-          16: 1,
-        });
-        setColumnHandlerIndex({
-          1: 1,
-          2: 1,
-          3: 1,
-          4: 1,
-          5: 1,
-        });
+        resetTimeSelector()
+        setRowHandlerIndex(row_index);
+        setColumnHandlerIndex(column_index);
         break;
       case "assignL":
         setActivityModule(null);
         setLecturerAssign([]);
         setLecturerActivityAssign(null);
-
         break;
 
       case "assignR":
@@ -2535,7 +1246,7 @@ const GeneratePage = () => {
     setTab(tabToMove);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Anything in here is fired on component mount.
     let stringUserInfo = localStorage.getItem("userInfo");
 
@@ -2564,6 +1275,7 @@ const GeneratePage = () => {
 
   return (
     <div>
+
       <div className={styles.container}>
         <div
           className={
@@ -2633,17 +1345,9 @@ const GeneratePage = () => {
 
         {tabContentHandler()}
 
-        <ThemeProvider theme={theme}>
-          <Button
-            className={styles.containerAddButton}
-            color="gray"
-            variant="contained"
-            onClick={addModule}
-          >
-            Add
-          </Button>
-        </ThemeProvider>
+        <AddModuleButton addModule={addModule}/>
       </div>
+
       <Modal open={importModalOpen} onClose={importModalHandleClose}>
         <div className={styles.modal}>
           <div>
@@ -2719,34 +1423,11 @@ const GeneratePage = () => {
           </div>
         </div>
       </Modal>
-      <ThemeProvider theme={theme}>
-        <Button
-          className={styles.containerResetButton}
-          color="gray"
-          variant="contained"
-          onClick={resetInputButton}
-        >
-          Reset
-        </Button>
-      </ThemeProvider>
-      <ThemeProvider theme={theme}>
-        <Button
-          className={styles.containerImportButton}
-          color="gray"
-          variant="contained"
-          onClick={importModalHandleOpen}
-        >
-          Import
-        </Button>
-        <Button
-          className={styles.containerExportButton}
-          color="gray"
-          variant="contained"
-          onClick={exportJson}
-        >
-          Export
-        </Button>
-      </ThemeProvider>
+
+      <ResetButton  resetInputButton      ={resetInputButton}     />
+      <ImportButton importModalHandleOpen ={importModalHandleOpen}/>
+      <ExportButton exportJson            ={exportJson}           />
+
     </div>
   );
 };

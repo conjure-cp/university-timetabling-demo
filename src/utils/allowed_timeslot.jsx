@@ -1,3 +1,4 @@
+// initial value for activityAllowedTimeSlot
 export const allowed_timeslot = [
     ["1", "9"],
     ["1", "10"],
