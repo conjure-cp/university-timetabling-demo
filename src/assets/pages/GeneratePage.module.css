@@ -6,6 +6,20 @@
   margin-bottom: 60px;
 }
 
+.createSelect {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
+  border: none;       /* Removes the border    */
+  width: 150px;       /* Adjusts the width     */
+  height: 22px;       /* Adjusts the height    */
+  font-size: 15px;    /* Adjusts the font size */
+  outline: none;      /* Removes the outline   */
+}
+
 .containerHeader1 {
   position: absolute;
   top: -12px;
