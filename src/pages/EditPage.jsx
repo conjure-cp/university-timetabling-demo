@@ -182,7 +182,8 @@ class EditPage extends React.Component {
           },
         });
       } else if (tab === "activity") {
-        let activityState = this.state.userInput.activities;
+        let moduleState      = this.state.userInput.umodules;
+        let activityState    = this.state.userInput.activities;
 
         let assignedLecturer = this.state.userInput.assigned.lecturers;
         let assignedRoom = this.state.userInput.assigned.rooms;
@@ -192,7 +193,10 @@ class EditPage extends React.Component {
             if (id === moduleID + "." + activity) {
               delete assignedLecturer[moduleID + "." + activity];
               delete assignedRoom[moduleID + "." + activity];
+        
               delete activityState[moduleID][activity];
+              // also update the activities in umodules 
+              moduleState[moduleID].activities = moduleState[moduleID].activities.filter(a => a !== activity);
             }
           });
         });
@@ -202,6 +206,9 @@ class EditPage extends React.Component {
         this.setState({
           userInput: {
             ...this.state.userInput,
+            umodules: {
+              ...moduleState,
+            },
             activities: {
               ...activityState,
             },
