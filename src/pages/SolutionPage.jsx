@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import {
   Button,
   createTheme,
@@ -17,41 +19,11 @@ import {
 } from "@mui/icons-material";
 
 import { Stack } from "@mui/system";
-import * as React from "react";
+
+import { model } from "../utils/model";
+import { theme } from "../utils/theme";
 
 import styles from "../assets/pages/SolutionPage.module.css";
-
-const model =
-  "given nb_activities : int\ngiven nb_lecturers : int\ngiven nb_rooms : int\n \nletting ACTIVITY be domain int(1..nb_activities)\nletting LECTURER be domain int(1..nb_lecturers)\nletting ROOM be domain int(1..nb_rooms)\nletting DAY be domain int(1..5)\nletting HOUR be domain int(9..16)\n\nletting M be 100000\n \nfind assignment : function (total) ACTIVITY --> record {lecturer : LECTURER, day : DAY, hour : HOUR, room : ROOM }\n \n$ two activities that happen at the same time cannot be delivered by the same lecturer\nsuch that\n    [ (assignment(i)[day] = assignment(j)[day] /\\ assignment(i)[hour] = assignment(j)[hour]) -> assignment(i)[lecturer] != assignment(j)[lecturer]\n    | i : ACTIVITY\n    , j : int(i+1..nb_activities)\n    ]\n \n$ two activities that happen at the same time cannot be in the same room\nsuch that\n    [ (assignment(i)[day] = assignment(j)[day] /\\ assignment(i)[hour] = assignment(j)[hour]) -> assignment(i)[room] != assignment(j)[room]\n    | i : ACTIVITY\n    , j : int(i+1..nb_activities)\n    ]\n\n\n\ngiven activity_allowed_times : function (total) ACTIVITY --> set of (DAY, HOUR)\nsuch that [ (rec[day], rec[hour]) in activity_allowed_times(a) | (a, rec) <- assignment ]\n\ngiven activity_preferred_times : function (total) ACTIVITY --> set of (DAY, HOUR)\nfind activity_preferred_times_penalty : int(0..M)\nsuch that activity_preferred_times_penalty = sum([ toInt(!((rec[day], rec[hour]) in activity_preferred_times(a))) | (a, rec) <- assignment ])\n\n\n\ngiven lecturer_allowed_times : function (total) LECTURER --> set of (DAY, HOUR)\nsuch that [ (rec[day], rec[hour]) in lecturer_allowed_times(rec[lecturer]) | (a, rec) <- assignment ]\n\n\ngiven lecturer_preferred_times : function (total) LECTURER --> set of (DAY, HOUR)\nfind lecturer_preferred_times_penalty : int(0..M)\nsuch that lecturer_preferred_times_penalty = sum([ toInt(!((rec[day], rec[hour]) in lecturer_preferred_times(rec[lecturer]))) | (a, rec) <- assignment ])\n\n\n\ngiven room_allowed_times : function (total) ROOM --> set of (DAY, HOUR)\nsuch that [ (rec[day], rec[hour]) in room_allowed_times(rec[room]) | (a, rec) <- assignment ]\n\ngiven room_preferred_times : function (total) ROOM --> set of (DAY, HOUR)\nfind room_preferred_times_penalty : int(0..M)\nsuch that room_preferred_times_penalty = sum([ toInt(!((rec[day], rec[hour]) in room_preferred_times(rec[room]))) | (a, rec) <- assignment ])\n\n\n\ngiven activity_allowed_rooms : function (total) ACTIVITY --> set of ROOM\nsuch that [ rec[room] in activity_allowed_rooms(a) | (a, rec) <- assignment ]\n \ngiven activity_allowed_lecturers : function (total) ACTIVITY --> set of LECTURER\nsuch that [ rec[lecturer] in activity_allowed_lecturers(a) | (a, rec) <- assignment ]\n \n$ make sure the given set of activities are on separate days\ngiven activities_on_seperate_days : set of sequence of ACTIVITY\nsuch that forAll seq in activities_on_seperate_days . forAll i : int(2..|seq|) . assignment(seq(i-1))[day] < assignment(seq(i))[day]\n\n\n\nminimising activity_preferred_times_penalty + lecturer_preferred_times_penalty + room_preferred_times_penalty\n";
-
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    primary: {
-      main: "#0971f1",
-      darker: "#053e85",
-    },
-    gray: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#64748B",
-      contrastText: "#64748B",
-    },
-
-    allowed: {
-      main: "#64748B",
-      contrastText: "#fff",
-    },
-    preferred: {
-      main: "#152D4F",
-      contrastText: "#fff",
-    },
-  },
-});
 
 const SolutionPage = () => {
   const [newIntervalID, setNewIntervalID] = React.useState(null);
@@ -66,7 +38,6 @@ const SolutionPage = () => {
   const [importModalOpen, setImportModalOpen] = React.useState(false);
   const [dragActive, setDragActive] = React.useState(false);
   const [importFile, setImportFile] = React.useState();
-  const inputRef = React.useRef(null);
 
   const [showState, setShowState] = React.useState({
     all: true,
@@ -74,6 +45,8 @@ const SolutionPage = () => {
     lecturers: false,
     rooms: false,
   });
+
+  const inputRef = React.useRef(null);
 
   const importModalHandleOpen = () => setImportModalOpen(true);
   const importModalHandleClose = () => setImportModalOpen(false);
@@ -254,14 +227,10 @@ const SolutionPage = () => {
           Object.keys(mapper.sameModule).forEach((sameModuleIndex) => {
             if (mapper.sameModule[sameModuleIndex].includes(moduleMapIndex)) {
               isMultipleActivity = true;
-              for (
-                let i = 0;
-                i < mapper.sameModule[sameModuleIndex].length;
-                i++
-              ) {
+              for (const element of mapper.sameModule[sameModuleIndex]) {
                 generateState = {
                   ...generateState,
-                  [mapper.sameModule[sameModuleIndex][i]]: [0],
+                  [element]: [0],
                 };
               }
 
