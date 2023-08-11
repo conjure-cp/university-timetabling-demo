@@ -1275,8 +1275,8 @@ const GeneratePage = () => {
   }, []);
 
   return (
-    <div>
-        <div className={styles.container}>
+    <div className={styles.page}>
+      <div className={styles.container}>
 
         <select 
           value={tab}

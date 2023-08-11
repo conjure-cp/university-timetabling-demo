@@ -6,13 +6,14 @@ import { ModeEdit, Delete } from "@mui/icons-material";
 import { Autocomplete, Chip, TextField, Button } from "@mui/material";
 
 import Timeslot         from "../components/Timeslot/Timeslot";
-import ExpandableSection from "../components/ExpandableSection";
+import TabSection       from "../components/EditPage/TabSection";
 
 import { theme } from "../utils/theme";
 
 import styles from "../assets/pages/EditPage.module.css";
 
 class EditPage extends React.Component {
+
   constructor() {
     super();
 
@@ -112,7 +113,13 @@ class EditPage extends React.Component {
       tempText: "",
       timeslot: {},
       originalUserInfo: originalUserInfo,
+      tab: "module"                       // Adding the "tab" state
     };
+  }
+
+  // Method to handle tab change similar to setTab in hooks
+  setTab = (value) => {
+    this.setState({ tab: value });
   }
 
   deleteState = (tab, id) => {
@@ -832,7 +839,7 @@ class EditPage extends React.Component {
     }
   
     const lecturers = Object.keys(userInput.lecturers);
-    const rooms = Object.keys(userInput.rooms);
+    const rooms     = Object.keys(userInput.rooms);
   
     const { lecturers: assignedLecturers, rooms: assignedRooms } = userInput.assigned;
   
@@ -955,9 +962,50 @@ class EditPage extends React.Component {
     }
   };
 
+  tabContentHandler = () => {
+    switch (this.state.tab) {
+      case "module":
+        return (
+          <TabSection expandKey="module"     renderFn={this.renderMoudle} />
+        );
+      case "activity":
+        return (
+          <TabSection expandKey="activities" renderFn={this.renderActivity} />
+        );
+      case "lecturer":
+        return (
+          <TabSection expandKey="lecturers"  renderFn={this.renderLecturer} />
+        );
+      case "room":
+        return (
+          <TabSection expandKey="rooms"      renderFn={this.renderRoom} />
+        );
+      case "assigned":
+        return (
+          <TabSection expandKey="assigned"   renderFn={this.renderAssigned} />
+        );
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <div className={styles.page}>
+        <div className={styles.container}>
+          <select 
+            value={this.state.tab}
+            onChange={(event) => this.setTab(event.target.value)}
+            className={styles.createSelect}
+          >
+            <option value="module">    Module (Class)      </option>
+            <option value="activity">  Activity            </option>
+            <option value="lecturer">  Lecturer (Staff)    </option>
+            <option value="room">      Room                </option>
+            <option value="assigned">  Assigned            </option>
+          </select>
+          {this.tabContentHandler()}
+        </div>
         <ThemeProvider theme={theme}>
           <Button
             disabled={
@@ -970,41 +1018,6 @@ class EditPage extends React.Component {
           >
             SAVE CHANGE
           </Button>
-          <ExpandableSection
-            title="Modules (Classes)"
-            expandKey="modules"
-            onExpand={this.expand}
-            expandedState={this.state.expandState}
-            renderFn={this.renderMoudle}
-          />
-          <ExpandableSection
-            title="Activities"
-            expandKey="activities"
-            onExpand={this.expand}
-            expandedState={this.state.expandState}
-            renderFn={this.renderActivity}
-          />
-          <ExpandableSection
-            title="Lecturers (Staffs)"
-            expandKey="lecturers"
-            onExpand={this.expand}
-            expandedState={this.state.expandState}
-            renderFn={this.renderLecturer}
-          />
-          <ExpandableSection
-            title="Rooms"
-            expandKey="rooms"
-            onExpand={this.expand}
-            expandedState={this.state.expandState}
-            renderFn={this.renderRoom}
-          />
-          <ExpandableSection
-            title="Assigned"
-            expandKey="assigned"
-            onExpand={this.expand}
-            expandedState={this.state.expandState}
-            renderFn={this.renderAssigned}
-          />
         </ThemeProvider>
       </div>
     );

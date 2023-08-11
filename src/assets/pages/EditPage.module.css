@@ -1,5 +1,5 @@
 .page {
-    padding: 0px 50px;
+    /* padding: 0px 50px; */
 }
 
 .header {
@@ -22,6 +22,29 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.container {
+    /* height: 300px; */
+    border: 1px solid black;
+    padding: 20px 35px;
+    position: relative;
+    margin-bottom: 60px;
+}
+  
+
+.createSelect {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    padding: 0px 12px;
+    background: #f8f8f8;
+    cursor: pointer;
+    border: none;       /* Removes the border    */
+    width: 150px;       /* Adjusts the width     */
+    height: 22px;       /* Adjusts the height    */
+    font-size: 15px;    /* Adjusts the font size */
+    outline: none;      /* Removes the outline   */
+  }
 
 .timeslotContainer {
     position: relative;
@@ -94,11 +117,11 @@
     grid-template-columns: repeat(3, 1fr);
     overflow-y: hidden;
     max-height: 12px;
-    border-left: 1px solid;
+    /* border-left: 1px solid;
     border-right: 1px solid;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid; */
     transition: max-height 0.5s;
-    padding: 24px 36px;
+    padding: 20px 20px;
 }
 
 .expand {
@@ -106,19 +129,19 @@
     grid-template-columns: repeat(3, 1fr);
     max-height: 800px;
     overflow-y: scroll;
-    border-left: 1px solid;
+    /* border-left: 1px solid;
     border-right: 1px solid;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid; */
     transition: max-height 0.5s;
-    padding: 24px 36px;
+    padding: 20px 20px;
 }
 
 .shrinkActivity {
     overflow-y: hidden;
     max-height: 12px;
-    border-left: 1px solid;
+    /* border-left: 1px solid;
     border-right: 1px solid;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid; */
     transition: max-height 0.5s;
     padding: 24px 36px;
 }
@@ -126,9 +149,9 @@
 .expandActivity {
     max-height: 800px;
     overflow-y: scroll;
-    border-left: 1px solid;
+    /* border-left: 1px solid;
     border-right: 1px solid;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid; */
     transition: max-height 0.5s;
     padding: 24px 36px;
 }
