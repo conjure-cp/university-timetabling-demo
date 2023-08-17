@@ -1220,6 +1220,7 @@ const GeneratePage = () => {
         setLecturerAssign([]);
         setLecturerActivityAssign("");
         setRoomAssign([]);
+        break;
       case "lecturer":
       case "room":
         setLecturerName("");
@@ -1274,74 +1275,21 @@ const GeneratePage = () => {
   }, []);
 
   return (
-    <div>
-
+    <div className={styles.page}>
       <div className={styles.container}>
-        <div
-          className={
-            tab === "module"
-              ? styles.containerHeader1Active
-              : styles.containerHeader1
-          }
-          onClick={() => tabHandler("module")}
-        >
-          Module (Class)
-        </div>
 
-        <div
-          className={
-            tab === "activity"
-              ? styles.containerHeader2Active
-              : styles.containerHeader2
-          }
-          onClick={() => tabHandler("activity")}
+        <select 
+          value={tab}
+          onChange={(event) => tabHandler(event.target.value)}
+          className={styles.createSelect}
         >
-          Activity
-        </div>
-
-        <div
-          className={
-            tab === "lecturer"
-              ? styles.containerHeader3Active
-              : styles.containerHeader3
-          }
-          onClick={() => tabHandler("lecturer")}
-        >
-          Lecturer (Staff)
-        </div>
-
-        <div
-          className={
-            tab === "room"
-              ? styles.containerHeader4Active
-              : styles.containerHeader4
-          }
-          onClick={() => tabHandler("room")}
-        >
-          Room
-        </div>
-
-        <div
-          className={
-            tab === "assignL"
-              ? styles.containerHeader5Active
-              : styles.containerHeader5
-          }
-          onClick={() => tabHandler("assignL")}
-        >
-          Assign Lecutrer
-        </div>
-
-        <div
-          className={
-            tab === "assignR"
-              ? styles.containerHeader6Active
-              : styles.containerHeader6
-          }
-          onClick={() => tabHandler("assignR")}
-        >
-          Assign Room
-        </div>
+          <option value="module">   Module (Class)  </option>
+          <option value="activity"> Activity        </option>
+          <option value="lecturer"> Lecturer (Staff)</option>
+          <option value="room">     Room            </option>
+          <option value="assignL">  Assign Lecturer </option>
+          <option value="assignR">  Assign Room     </option>
+        </select>
 
         {tabContentHandler()}
 

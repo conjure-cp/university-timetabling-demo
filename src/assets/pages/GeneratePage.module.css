@@ -1,9 +1,24 @@
+
 .container {
   /* height: 300px; */
   border: 1px solid black;
   padding: 20px 35px;
   position: relative;
   margin-bottom: 60px;
+}
+
+.createSelect {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  padding: 0px 12px;
+  background: #f8f8f8;
+  cursor: pointer;
+  border: none;       /* Removes the border    */
+  width: 150px;       /* Adjusts the width     */
+  height: 22px;       /* Adjusts the height    */
+  font-size: 15px;    /* Adjusts the font size */
+  outline: none;      /* Removes the outline   */
 }
 
 .containerHeader1 {

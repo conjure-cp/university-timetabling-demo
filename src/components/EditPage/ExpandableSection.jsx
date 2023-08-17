@@ -4,7 +4,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 import IconButton from "@mui/material/IconButton";
 
-import styles from "../assets/pages/EditPage.module.css";
+import styles from "../../assets/pages/EditPage.module.css";
 
 const ExpandableSection = ({ title, expandKey, onExpand, expandedState, renderFn }) => {
   
