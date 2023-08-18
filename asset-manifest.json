@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/university-timetabling/static/css/main.f6f2cf8b.css",
+    "main.js": "/university-timetabling/static/js/main.b5b23532.js",
+    "static/js/787.0695c711.chunk.js": "/university-timetabling/static/js/787.0695c711.chunk.js",
+    "index.html": "/university-timetabling/index.html",
+    "main.f6f2cf8b.css.map": "/university-timetabling/static/css/main.f6f2cf8b.css.map",
+    "main.b5b23532.js.map": "/university-timetabling/static/js/main.b5b23532.js.map",
+    "787.0695c711.chunk.js.map": "/university-timetabling/static/js/787.0695c711.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f6f2cf8b.css",
+    "static/js/main.b5b23532.js"
+  ]
+}
