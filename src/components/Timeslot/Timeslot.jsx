@@ -135,10 +135,6 @@ class Timeslot extends React.Component {
     }
 
     setTimeslotHelper = (newValue) => {
-        let result = {
-            [this.props.index]: newValue
-        }
-
         this.props.setTimeslot(this.props.tab, this.props.index, newValue)
     }
 
