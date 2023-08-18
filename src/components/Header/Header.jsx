@@ -4,7 +4,6 @@ import { Button, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 import styles from "../../assets/components/Header/Header.module.css";
-import { useLocation } from "react-router-dom";
 
 const theme = createTheme({
   status: {
@@ -23,8 +22,7 @@ const theme = createTheme({
 });
 
 const Header = () => {
-  const location = useLocation();
-  // console.log(location)
+
   return (
     <div className={styles.header}>
       <div className={styles.buttonContainer}>
