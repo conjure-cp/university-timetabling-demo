@@ -10,7 +10,7 @@ import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <BrowserRouter basename={"university-timetabling"}>
+    <BrowserRouter basename={"university-timetabling-demo"}>
       <Header />
       <Routes>
         <Route exact path="/" element={<MainPage />} />
