@@ -54,7 +54,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/university-timetabling",
+  "homepage": "/university-timetabling-demo",
   "devDependencies": {
     "eslint": "^8.45.0"
   }
