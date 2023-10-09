@@ -2089,7 +2089,7 @@ const SolutionPage = () => {
     let data = parseUserInputToSolverData();
     let jobID = localStorage.getItem("jobID");
     if (!jobID) {
-      fetch("https://demos.constraintmodelling.org/server/submit", {
+      fetch("https://conjure-aas.cs.st-andrews.ac.uk/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -2122,7 +2122,7 @@ const SolutionPage = () => {
           "You already got the timetable, Do you want to regenerate the timetable?"
         )
       ) {
-        fetch("https://demos.constraintmodelling.org/server/submit", {
+        fetch("https://conjure-aas.cs.st-andrews.ac.uk/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -2153,7 +2153,7 @@ const SolutionPage = () => {
   };
 
   const getResult = () => {
-    fetch("https://demos.constraintmodelling.org/server/get", {
+    fetch("https://conjure-aas.cs.st-andrews.ac.uk/get", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
