@@ -106,3 +106,7 @@ Assign **JH110** to **CS1002**
 
 ## Bugs and errors
 - If you find and buys or errors please email me(iwg6852@gmail.com), I will try to fix it ASAP.
+
+## License
+
+This project is licensed under the Mozilla Public License 2.0. For full license information, please see the [LICENSE](./LICENSE) file in the repository.
