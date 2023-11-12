@@ -10,11 +10,7 @@ This project is a dissertation project written by Wankyu Lim (wl39 - 160005106)
 
 ***OR***
 
-- You can directly use the application in this link: https://demos.constraintmodelling.org/university-timetabling/
-- **DO NOT REFRESH ON THE PAGE ABOVE**: This will cause 404 error
-  - This is because, the webpage is hosted via ngnix but also the application used react-router/
-    - The combination above causes 404 error when the user refreshes the page
-    - This error colud be fixed, but I have to change the back-end code which I do not have the access.
+- You can directly use the application in this link: https://conjure-cp.constraintmodelling.org/university-timetabling-demo
 
 ## User Interface
 
