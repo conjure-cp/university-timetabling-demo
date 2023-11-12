@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 21
           cache: npm
 
       - name: Build
@@ -21,4 +21,4 @@ jobs:
           npm ci
           npm run build
           # creates a .nojekyll file in the out directory to tell GitHub Pages not to treat the site as a Jekyll project.
-          touch build/.nojekyll
+          touch out/.nojekyll
