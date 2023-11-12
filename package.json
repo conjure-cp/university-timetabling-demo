@@ -20,7 +20,7 @@
     "react-router-dom": "^6.18.0",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "styled-components": "^5.3.6",
+    "styled-components": "^6.1.1",
     "web-vitals": "^3.5.0"
   },
   "scripts": {
@@ -56,6 +56,6 @@
   },
   "homepage": "/university-timetabling-demo",
   "devDependencies": {
-    "eslint": "^8.45.0"
+    "eslint": "^8.53.0"
   }
 }
