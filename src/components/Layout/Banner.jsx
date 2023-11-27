@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-const REPO_URL = 'conjure-cp/university-timetabling-demo'
+const REPO_URL = 'conjure-cp/task-allocation-demo'
 
 const Banner = () => {
   // fetch and slice the contributors list
     const [contributors, setContributors] = useState([]);
-    const [lastUpdated, setLastUpdated] = useState('');
 
     useEffect(() => {
       // Fetch contributors from GitHub
@@ -16,16 +15,6 @@ const Banner = () => {
           setContributors(filteredData.map(contributor => contributor.login));
         })
         .catch(error => console.error('Error:', error));
-
-      // Fetch last updated time
-      fetch(`https://api.github.com/repos/${REPO_URL}`)
-      .then(response => response.json())
-      .then(data => {
-        const updatedDate   = new Date(data.updated_at);
-        const formattedDate = `${updatedDate.getFullYear()}-${String(updatedDate.getMonth() + 1).padStart(2, '0')}-${String(updatedDate.getDate()).padStart(2, '0')}`;
-        setLastUpdated(formattedDate);
-      })
-      .catch(error => console.error('Error:', error));
     }, []);
 
     const chunkSize = 3;
@@ -37,36 +26,67 @@ const Banner = () => {
     }
 
     return (
-      <div class="banner">
+      <div className="h-full p-4">
+        {/* 
+          1. Banner Container
+            Height      : 'h-full' makes the div take up the full height of its parent.
+            Text Colour : 'text-white' sets the text colour to white.
+            Padding     : 'p-4' sets padding of 4 units on all sides.
+        */}
         
-        {/* 1.1 Logo Section */}
-        <div class="logo-section">
-          <div className="flex items-center m-1">
-                  <img src="conjure-cp-logo.png" alt="conjure-cp" className="w-16 h-16 " />
-                    <div className="text-xl font-semibold ml-4">
-                      <a href="https://github.com/conjure-cp" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                        conjure-cp
-                      </a>
-                    </div>
-                </div>
-                <div className="text-3 font-bold tracking-wide mb-4 m-1">Workload Planner</div>
-              
-                <div className="mb-2 m-1">This project is created as a dissertation project at the University of St Andrews for optimal workload planning.</div>
-                <div className="mb-2 m-1">License: Mozilla Public License 2.0</div>
-                {/* Last Updated */}
-                <div className="text-sm mb-2 m-1"> Last Updated: {lastUpdated} </div>
+          {/* 
+            Flex Container
+              Container   : 'container' sets the max-width to the designed container width.
+              Margin Auto : 'm-auto' centers the container horizontally.
+              Grid Layout: The 'grid grid-cols-5 grid-flow-col-dense gap-2' classes are used to set up a grid layout. This replaces the previous flex layout ('flex flex-row').
+              Grid Columns: 'grid-cols-5' specifies that the grid should have 5 columns.
+              Column Flow: 'grid-flow-col-dense' tries to fill in earlier columns before adding more columns to the layout.
+              Grid Gap: 'gap-2' sets the grid gap between columns to 2 units.
+              Responsive  : md:grid-cols-4 TODO
+          */}
+        <div className=" container m-auto grid grid-cols-5 grid-flow-col-dense gap-2"> 
+
+           {/* 
+            1 Logo
+              Flex-Col: 'flex flex-col' enables flex layout and arranges children in a column.
+              Column Span: 'col-span-2' spans the div across 2 columns of the grid.
+              Row Span: 'row-span-5' spans the div across 5 rows of the grid.
+              Alignment: 'items-start' aligns the flex items to the start of the container.
+              Padding: 'p-4' sets padding of 4 units on all sides.
+              Text Style: 
+                - 'text-lg' sets the text size to large,
+                - 'font-semibold' makes the text semi-bold,
+                - 'mb-2' adds a margin-bottom of 2 units to the span elements inside.
+          */}
+          <div className="col-span-2 row-span-5 flex flex-col items-start p-4">
+              {/* Logo */}
+              <div className="flex items-center m-1">
+                <img src="/university-timetabling-demo/conjure-cp-logo.png" alt="conjure-cp" className="w-16 h-16" />
+                  <div className="text-xl font-semibold ml-4">
+                    <a href="https://github.com/conjure-cp" target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      conjure-cp
+                    </a>
+                  </div>
+              </div>
+              <div className="text-3 font-bold tracking-wide mb-4 m-1">Task allocation</div>
+             
+              <div className="mb-2 m-1">This project is created as a dissertation project at the University of St Andrews for optimal task allocation.</div>
+              <div className="mb-2 m-1">License: Mozilla Public License 2.0</div>
+            </div>
+
+          {/* Horizontal line */}
+           <div className="row-start-1 col-span-5 border-t border-slate-700"/>
+
+          {/* 1.1 Project Author */}
+          <div className="row-start-2 col-span-1 flex flex-col items-stretch">
+            <span className="text-lg font-semibold mb-2">Project Author</span>
+            <div className="grid grid-cols-2 grid-flow-col gap-2 overflow-auto"> 
+              <a href={`https://github.com/williamburns`} className="mb-1 hover:underline" >William Burns</a>
+            </div>
           </div>
 
-          {/* 1.2 Project Author */}
-          <div class="project-author">
-              <span className="text-lg font-semibold mb-2">Project Author</span>
-              <div className="grid grid-cols-2 grid-flow-col gap-2 overflow-auto"> 
-                <a href={`https://github.com/williamburns`} className="mb-1 hover:underline" >William Burns</a>
-              </div>
-          </div>
-    
-          {/* 1.3 Project Contributors */}
-          <div className="project-contributors">
+           {/* 1.2 Project Contributors */}
+          <div className="row-start-2 col-span-2 flex flex-col items-stretch">
             <span className="text-lg font-semibold mb-2">Project Contributors</span>
             <div className="grid grid-cols-2 grid-flow-col gap-2 overflow-auto"> 
             {chunkedContributors.map((chunk, chunkIndex) => (
@@ -79,27 +99,31 @@ const Banner = () => {
             </div>
           </div>
           
+          {/* Horizontal line */}
+          <div className="row-start-3 col-span-3 border-t border-slate-700"/>
+          
           {/* 2.1 Additional Links*/}
-           <div className="additional-links">
-            <span className="text-lg font-semibold mb-2">Additional Links</span>
-            <a href={`https://github.com/${REPO_URL}`} className="mb-1 hover:underline">GitHub</a>
+           <div className="row-start-4 col-span-1 flex flex-col items-stretch">
+            <span className="text-lg font-semibold mb-2">Links</span>
+            <a href={`https://github.com/${REPO_URL}`} className="mb-1 hover:underline">Source code</a>
             <a href={`https://github.com/${REPO_URL}#readme`} className="mb-1 hover:underline">Documentation</a>
-            <a href={`https://github.com/${REPO_URL}#application-preview`} className="mb-1 hover:underline">Demo</a>
+            <a href={`https://github.com/${REPO_URL}#application-preview`} className="mb-1 hover:underline">Example Screenshots</a>
           </div>
 
             
           {/* 2.2 Source Code Info Section */}
-           <div className="info-section">
-              <span className="text-lg font-semibold mb-2">Demo</span>
-              <a href={`https://github.com/${REPO_URL}/blob/main/screenshots/create-project.gif`} className="mb-1 hover:underline">Create new project</a>
-              <a href={`https://github.com/${REPO_URL}/blob/main/screenshots/create-category.gif`} className="mb-1 hover:underline">Create new category</a>
-              <a href={`https://github.com/${REPO_URL}/blob/main/screenshots/create-task.gif`} className="mb-1 hover:underline">Create new task</a>
-              <a href={`https://github.com/${REPO_URL}/blob/main/screenshots/create-user.gif`} className="mb-1 hover:underline">Create new user</a>
+           <div className="row-start-4 col-span-1 flex flex-col items-stretch">
+              <span className="text-lg font-semibold mb-2">Contact us</span>
+                {/* <p className="text-sm">If you find any issues, please submit them through the following link:</p> */}
+                <a href={`https://github.com/${REPO_URL}/issues/new`} className="hover:underline">Report an Issue</a>
           </div>
+
+          {/* Horizontal line */}
+          <div className="row-start-5 col-span-5 border-t border-slate-700"/>
+        </div>
 
       </div>
     );
   }
   
   export default Banner;
-  
