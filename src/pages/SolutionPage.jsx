@@ -1614,9 +1614,21 @@ const SolutionPage = () => {
   };
 
   React.useEffect(() => {
-    let solution = JSON.parse(localStorage.getItem("solution"));
 
-    if (solution) {
+    let storedSolution = localStorage.getItem("solution");
+    let solution;
+
+    if (storedSolution !== null || storedSolution !== undefined) {
+      setSolutionDiv(
+        <div className={styles.noSolution}>
+          <div>Solution has never been generated</div>
+          <div className={styles.noSolutionSub}>
+            Please click the solve button to get a solution
+          </div>
+        </div>
+      );
+    } else {
+      solution = JSON.parse(storedSolution);
       if (solution.length === 0) {
         setSolutionDiv(
           <div className={styles.noSolution}>
@@ -1633,15 +1645,6 @@ const SolutionPage = () => {
 
         solutionHandler(solution);
       }
-    } else {
-      setSolutionDiv(
-        <div className={styles.noSolution}>
-          <div>Solution has never been generated</div>
-          <div className={styles.noSolutionSub}>
-            Please click the solve button to get a solution
-          </div>
-        </div>
-      );
     }
   }, []);
 
@@ -2299,48 +2302,9 @@ const SolutionPage = () => {
         </div>
       </Modal>
       <ThemeProvider theme={theme}>
-        {result ? (
-          result.solution ? (
-            result.solution.length !== 0 ? (
-              <div>
-                <Button
-                  className={styles.exportButton}
-                  color="gray"
-                  variant="contained"
-                  onClick={exportSolution}
-                >
-                  EXPORT
-                </Button>
-                <Button
-                  className={styles.containerResetButton}
-                  color="gray"
-                  variant="contained"
-                  onClick={resetInputButton}
-                >
-                  RESET
-                </Button>
-              </div>
-            ) : null
-          ) : null
-        ) : null}
-        <Button
-          className={styles.importButton}
-          color="gray"
-          variant="contained"
-          onClick={importModalHandleOpen}
-        >
-          IMPORT
-        </Button>
-        <Button
-          className={styles.solveButton}
-          color="gray"
-          variant="contained"
-          onClick={giveWorkSlover}
-        >
-          GET SOLUTION
-        </Button>
 
-        <div>
+        {/* Solution */}
+        <div className="min-h-96">
           {result ? (
             result.solution ? (
               result.solution.length !== 0 ? (
@@ -2386,6 +2350,68 @@ const SolutionPage = () => {
           ) : null}
           {solutionDiv}
         </div>
+
+
+        {/* Buttons */}
+        <div className="flex justify-between w-full">
+          {/* Left side buttons */}
+          <div className="flex flex-col space-y-2">
+              {result ? (
+              result.solution ? (
+                result.solution.length !== 0 ? (
+                  <div>
+                    <Button
+                      className={styles.containerResetButton}
+                      color="gray"
+                      variant="contained"
+                      onClick={resetInputButton}
+                    >
+                      RESET
+                    </Button>
+                  </div>
+                ) : null
+              ) : null
+            ) : null}
+          </div>
+
+          {/* Right side buttons */}
+          <div className="flex flex-col space-y-2 items-end">
+            {result ? (
+              result.solution ? (
+                result.solution.length !== 0 ? (
+                  <div>
+                    <Button
+                      className={styles.exportButton}
+                      color="gray"
+                      variant="contained"
+                      onClick={exportSolution}
+                    >
+                      EXPORT
+                    </Button>
+                  </div>
+                ) : null
+              ) : null
+            ) : null}
+            <Button
+              className={styles.importButton}
+              color="gray"
+              variant="contained"
+              onClick={importModalHandleOpen}
+            >
+              IMPORT
+            </Button>
+
+            <Button
+              className={styles.solveButton}
+              color="gray"
+              variant="contained"
+              onClick={giveWorkSlover}
+            >
+              GET SOLUTION
+            </Button>
+          </div>
+        </div>
+        
       </ThemeProvider>
     </div>
   );

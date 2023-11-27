@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
         <main className="min-h-80" style={{ padding: '150px 120px' }}>
           {children}
         </main>
-        <div className="relative">
+        <div className="relative border-t border-black">
           <Banner />
         </div>
       </div>

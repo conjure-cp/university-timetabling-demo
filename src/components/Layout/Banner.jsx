@@ -58,7 +58,7 @@ const Banner = () => {
             </div>
 
           {/* Horizontal line */}
-           <div className="row-start-1 col-span-5 border-t border-slate-700"/>
+           {/* <div className="row-start-1 col-span-5 border-t border-slate-700"/> */}
 
           {/* 1.1 Project Author */}
           <div className="row-start-2 col-span-1 flex flex-col items-stretch">
@@ -101,7 +101,7 @@ const Banner = () => {
           </div>
 
           {/* Horizontal line */}
-          <div className="row-start-5 col-span-5 border-t border-slate-700"/>
+          {/* <div className="row-start-5 col-span-5 border-t border-slate-700"/> */}
         </div>
 
       </div>

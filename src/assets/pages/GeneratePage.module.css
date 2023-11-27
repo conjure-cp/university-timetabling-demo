@@ -195,9 +195,9 @@
   border-radius: 0px !important;
   width: 90px;
   height: 40px;
-  position: fixed !important;
+  /* position: fixed !important;
   left: 25px;
-  bottom: 15px;
+  bottom: 15px; */
 }
 
 .containerExportButton {
@@ -205,9 +205,9 @@
   margin-left: 25px !important;
   width: 90px;
   height: 40px;
-  position: fixed !important;
+  /* position: fixed !important;
   right: 25px;
-  bottom: 70px;
+  bottom: 70px; */
 }
 
 .containerImportButton {
@@ -215,9 +215,9 @@
   margin-left: 25px !important;
   width: 90px;
   height: 40px;
-  position: fixed !important;
+  /* position: fixed !important;
   right: 25px;
-  bottom: 15px;
+  bottom: 15px; */
 }
 
 .activityInputContainer {

@@ -316,8 +316,8 @@
 }
 
 .saveButton {
-    position: fixed !important;
+    /* position: fixed !important;
     bottom: 20px;
-    right: 20px;
+    right: 20px; */
     border-radius: 0px !important;
 }

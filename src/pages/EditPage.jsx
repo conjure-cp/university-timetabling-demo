@@ -29,7 +29,7 @@ class EditPage extends React.Component {
 
     let originalUserInfo = {};
 
-    if (stringUserInfo) {
+    if (stringUserInfo && userInfo) {
       userInfo = JSON.parse(stringUserInfo);
       originalUserInfo = JSON.parse(stringUserInfo);
 
@@ -1014,19 +1014,23 @@ class EditPage extends React.Component {
           </select>
           {this.tabContentHandler()}
         </div>
-        <ThemeProvider theme={theme}>
-          <Button
-            disabled={
-              JSON.stringify(this.state.userInput) === JSON.stringify(this.state.originalUserInfo)
-            }
-            variant="contained"
-            color="gray"
-            className={styles.saveButton}
-            onClick={this.saveChange}
-          >
-            SAVE CHANGE
-          </Button>
-        </ThemeProvider>
+        
+         {/* Buttons */}
+         <div className="flex flex-row-reverse justify-between">
+          <ThemeProvider theme={theme}>
+            <Button
+              disabled={
+                JSON.stringify(this.state.userInput) === JSON.stringify(this.state.originalUserInfo)
+              }
+              variant="contained"
+              color="gray"
+              className={styles.saveButton}
+              onClick={this.saveChange}
+            >
+              SAVE CHANGE
+            </Button>
+          </ThemeProvider>
+        </div>
       </div>
     );
   }
