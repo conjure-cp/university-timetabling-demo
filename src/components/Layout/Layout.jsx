@@ -4,13 +4,15 @@ import Banner from './Banner';
 
 const Layout = ({ children }) => {
   return (
-    <>
-      <Header />
-      <main>
-        {children}
-      </main>
-      <Banner />
-    </>
+      <div id="root" className='flex flex-col min-h-screen w-full'>
+        <Header />
+        <main className="min-h-80" style={{ padding: '150px 120px' }}>
+          {children}
+        </main>
+        <div className="relative">
+          <Banner />
+        </div>
+      </div>
   );
 };
 
