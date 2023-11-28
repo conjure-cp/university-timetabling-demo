@@ -29,7 +29,7 @@ class EditPage extends React.Component {
 
     let originalUserInfo = {};
 
-    if (stringUserInfo && userInfo) {
+    if (stringUserInfo) {
       userInfo = JSON.parse(stringUserInfo);
       originalUserInfo = JSON.parse(stringUserInfo);
 

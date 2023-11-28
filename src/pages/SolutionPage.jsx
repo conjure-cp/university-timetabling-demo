@@ -2304,7 +2304,7 @@ const SolutionPage = () => {
       <ThemeProvider theme={theme}>
 
         {/* Solution */}
-        <div className="min-h-96">
+        <div className="min-h-screen-50">
           {result ? (
             result.solution ? (
               result.solution.length !== 0 ? (
@@ -2392,14 +2392,14 @@ const SolutionPage = () => {
                 ) : null
               ) : null
             ) : null}
-            <Button
+            {/* <Button
               className={styles.importButton}
               color="gray"
               variant="contained"
               onClick={importModalHandleOpen}
             >
               IMPORT
-            </Button>
+            </Button> */}
 
             <Button
               className={styles.solveButton}
