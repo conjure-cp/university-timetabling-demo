@@ -47,7 +47,7 @@ const SolutionPage = () => {
 
   const inputRef = React.useRef(null);
 
-  const importModalHandleOpen = () => setImportModalOpen(true);
+  // const importModalHandleOpen = () => setImportModalOpen(true);
   const importModalHandleClose = () => setImportModalOpen(false);
 
   const inputDragHandler = (event) => {
