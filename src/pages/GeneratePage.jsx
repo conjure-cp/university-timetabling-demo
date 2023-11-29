@@ -1372,10 +1372,16 @@ const GeneratePage = () => {
         </div>
       </Modal>
 
-      <ResetButton  resetInputButton      ={resetInputButton}     />
-      <ImportButton importModalHandleOpen ={importModalHandleOpen}/>
-      <ExportButton exportJson            ={exportJson}           />
-
+      {/* Buttons */}
+        <div className="flex flex-row justify-between">
+          <div className="flex-initial w-64">
+            <ResetButton resetInputButton={resetInputButton} />
+          </div>
+          <div className="flex space-x-2">
+            <ImportButton importModalHandleOpen={importModalHandleOpen} />
+            <ExportButton exportJson={exportJson} />
+          </div>
+        </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
-import styles from "../../assets/components/Header/Header.module.css";
+import styles from "../../assets/components/Layout/Header.module.css";
 
 const theme = createTheme({
   status: {
