@@ -6,7 +6,3 @@ updates:
       interval: "monthly"
     assignees:
       - "ozgurakgun"
-    groups:
-      all-npm-packages:
-        patterns:
-          - "*"
