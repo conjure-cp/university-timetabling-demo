@@ -10,7 +10,7 @@ This project is a dissertation project written by Wankyu Lim (wl39 - 160005106)
 
 ***OR***
 
-- You can directly use the application in this link: https://conjure-cp.constraintmodelling.org/university-timetabling-demo
+- You can directly use the application in this link: [https://conjure-cp.constraintmodelling.org/university-timetabling-demo](https://conjure-cp.github.io/university-timetabling-demo)
 
 ## User Interface
 
