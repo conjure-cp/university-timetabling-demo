@@ -60,6 +60,6 @@
   },
   "homepage": "/university-timetabling-demo",
   "devDependencies": {
-    "eslint": "^8.57.0"
+    "eslint": "^9.6.0"
   }
 }
