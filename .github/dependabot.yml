@@ -6,10 +6,10 @@ updates:
       interval: "monthly"
     assignees:
       - "ozgurakgun"
-    groups:
-      all-npm-packages:
-        patterns:
-          - "*"
+    # groups:
+    #   all-npm-packages:
+    #     patterns:
+    #       - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
