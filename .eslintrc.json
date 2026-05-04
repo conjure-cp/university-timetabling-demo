@@ -1,6 +1,13 @@
 {
-    "rules": {
-      "no-unused-vars": "warn"
-    }
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "default-case": "off",
+    "no-unused-vars": "warn"
   }
-  
+}
