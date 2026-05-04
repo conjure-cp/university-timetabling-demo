@@ -4,6 +4,13 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    ignore:
+      - dependency-name: "eslint"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "jest-watch-typeahead"
+        update-types:
+          - "version-update:semver-major"
     assignees:
       - "ozgurakgun"
     # groups:
