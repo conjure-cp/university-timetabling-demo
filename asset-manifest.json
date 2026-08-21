@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/university-timetabling-demo/static/css/main.a5170740.css",
-    "main.js": "/university-timetabling-demo/static/js/main.084675b3.js",
+    "main.js": "/university-timetabling-demo/static/js/main.2c4dc811.js",
     "static/js/488.535643b1.chunk.js": "/university-timetabling-demo/static/js/488.535643b1.chunk.js",
     "index.html": "/university-timetabling-demo/index.html",
     "main.a5170740.css.map": "/university-timetabling-demo/static/css/main.a5170740.css.map",
-    "main.084675b3.js.map": "/university-timetabling-demo/static/js/main.084675b3.js.map",
+    "main.2c4dc811.js.map": "/university-timetabling-demo/static/js/main.2c4dc811.js.map",
     "488.535643b1.chunk.js.map": "/university-timetabling-demo/static/js/488.535643b1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a5170740.css",
-    "static/js/main.084675b3.js"
+    "static/js/main.2c4dc811.js"
   ]
 }
