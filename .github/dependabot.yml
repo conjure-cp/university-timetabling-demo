@@ -8,9 +8,6 @@ updates:
       - dependency-name: "eslint"
         update-types:
           - "version-update:semver-major"
-      - dependency-name: "jest-watch-typeahead"
-        update-types:
-          - "version-update:semver-major"
     assignees:
       - "ozgurakgun"
     # groups:
