@@ -5,6 +5,7 @@ updates:
     schedule:
       interval: "monthly"
     ignore:
+      # eslint-config-react-app still requires ESLint 8.
       - dependency-name: "eslint"
         update-types:
           - "version-update:semver-major"
