@@ -103,6 +103,15 @@ Assign **JH110** to **CS1002**
 ## Bugs and errors
 - If you find and buys or errors please email me(iwg6852@gmail.com), I will try to fix it ASAP.
 
+## Generated asset comparison
+
+Pull requests build the base and head revisions in the same environment and
+compare every generated HTML, JavaScript (`.js`, `.mjs`, `.cjs`), and CSS file in
+`build/`. The check fails on any byte or filename difference, including asset
+hashes; nothing is normalized. Changed files appear in the job summary, and the
+`generated-assets-diff` artifact contains the recursive diff. Intentional output
+changes therefore also fail this comparison and need review.
+
 ## License
 
 This project is licensed under the Mozilla Public License 2.0. For full license information, please see the [LICENSE](./LICENSE) file in the repository.
